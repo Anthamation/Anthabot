@@ -61,6 +61,8 @@ client.on('message', msg => {
     //Gatekeeper
     var GuildID = client.guilds.get('404304756845051905')
     let MemberRole = GuildID.roles.get('404333218922233858')
+    var generalChannel = client.channels.get('404304757558345739')
+    
     if (msg.content.toLowerCase() == 'agree' && msg.channel.type === 'dm') {
 
         GuildID.fetchMember(msg.author.id).then (member => {
@@ -89,7 +91,7 @@ client.on('message', msg => {
         msg.member.addRole(MemberRole)
         msg.delete()
         msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay :D`)
-        client.channels.get('404304757558345739').then(() => {
+           .then(() => {
             msg.channel.sendMessage(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
             console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
         })
