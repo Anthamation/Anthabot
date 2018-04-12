@@ -2,9 +2,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 const YN_list = require("./YN_List.json");
-const memberQueue = require("./memberQueue.json");
 const hruf_List = require("./HRUF.json")
-
+const CurrentTime = new Date();
 
 
 client.on('ready', () => {
@@ -31,22 +30,27 @@ client.on('message', msg => {
     //PING
     if (msg.content.startsWith(config.prefix + "ping")) {
         msg.reply('Pong!');
+        console.log(`${msg.member.displayName} has used the PING command on ${CurrentTime}`)
     }
    //Yes/No Function
     if (msg.content.startsWith(config.prefix + "Anthabot,")) {
         msg.reply(YN_list.YN_options[Math.floor(Math.random() * 51)])
+        console.log(`${msg.member.displayName} has used the Y/N command on ${CurrentTime}`)
     }
     //is your mom gay?
     if (msg.content.startsWith(config.prefix + "is your mom gay?")) {
         msg.reply("no u")
+        console.log(`${msg.member.displayName} has used the ISYOURMOMGAY command on ${CurrentTime}`)
     }
     //Hello function
-    if (msg.content.startsWith(config.prefix) + "Hello!"){
+    if (msg.content.startsWith(config.prefix + "Hello!")){
         msg.reply("Hi there!")
+        console.log(`${msg.member.displayName} has used the Hello! command on ${CurrentTime}`)
     }
     //how are you function
-    if (msg.content.startsWith(config.prefix) + "How are you feeling?"){
+    if (msg.content.startsWith(config.prefix + "How are you?")){
             msg.reply(hruf_List.HRUFList[Math.floor(Math.random() * 10)])
+            console.log(`${msg.member.displayName} has used the HAY command on ${CurrentTime}`)
     }    
 
     
