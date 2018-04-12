@@ -51,9 +51,8 @@ client.on('message', msg => {
         console.log(`${msg.member.displayName} has used the Hello! command on ${CurrentTime}`)
     }
     //how are you function
-    if (msg.content.startsWith(config.prefix + "How are you?")){
+    if (msg.content.startsWith(config.prefix + 'How are you?')){
             msg.reply(hruf_List.HRUFList[Math.floor(Math.random() * 10)])
-            
             console.log(`${msg.member.displayName} has used the HAY command on ${CurrentTime}`)
     }    
 
@@ -91,8 +90,8 @@ client.on('message', msg => {
         msg.member.addRole(MemberRole)
         msg.delete()
         msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay :D`)
-           .then(() => {
-            msg.channel.sendMessage(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
+        .then(() => {
+            msg.channel('404304757558345739').sendMessage(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
             console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
         })
     }
