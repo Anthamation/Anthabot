@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 const YN_list = require("./YN_List.json");
-const hruf_List = require("./HRUF.json")
-const CurrentTime = new Date();
+const hruf_List = require("./HRUF.json");
+
 
 
 client.on('ready', () => {
@@ -13,17 +13,20 @@ client.on('ready', () => {
 /*things to work on: Server greeting and access*/
 
 client.on('guildMemberAdd', member => {
+    const CurrentTime = new Date();
     member.send(`Welcome to the Server, ${member.displayName}! I'm Antha-Bot, nice to meet you! Before we can get down to business, you need to read the rules first and find the magic keyword that grants you member access! When you find the keyword, just enter it in the #rules-and-Access channel, and you will be granted access automatically! Need help? My bot suffix is "!Yo!"`);
     console.log(`${member.displayName} has joined the server at ${member.joinedAt}`)
 });
 
 client.on('guildMemberRemove', member => {
-    console.log(`${member.displayName} has left the server at ${Date}`)
+    const CurrentTime = new Date();
+    console.log(`${member.displayName} has left the server at ${CurrentTime}`)
 });
 
 client.login(config.token)
 
 client.on('message', msg => { 
+    const CurrentTime = new Date();
     //Below is the prevention of Botception.
     if (msg.author.bot) return
     //User-initiated commands
@@ -50,6 +53,7 @@ client.on('message', msg => {
     //how are you function
     if (msg.content.startsWith(config.prefix + "How are you?")){
             msg.reply(hruf_List.HRUFList[Math.floor(Math.random() * 10)])
+            
             console.log(`${msg.member.displayName} has used the HAY command on ${CurrentTime}`)
     }    
 
@@ -69,7 +73,7 @@ client.on('message', msg => {
                     msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay :D`)
                     client.on("roleUpdate", MemberRole => {
                         msg.channel.send(`${member.displayName} has been verified! Welcome to the server!`)
-                        console.log(`${member.displayName} has been verified via DM`)
+                        console.log(`${member.displayName} has been verified via DM on ${CurrentTime}`)
                     })
                 })
             }
@@ -85,7 +89,9 @@ client.on('message', msg => {
         msg.member.addRole(MemberRole)
         msg.delete()
         msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay :D`)
-        client.channels.get('404304757558345739').send(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
-        console.log(`${msg.member.displayName} has been verified via Guild Channel.`)
-    };
+        client.channels.get('404304757558345739').then(() => {
+            msg.channel.sendMessage(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
+            console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
+        })
+    }
 })
