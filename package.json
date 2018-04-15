@@ -1,0 +1,29 @@
+{
+  "name": "anthabot",
+  "version": "1.0.0",
+  "description": "Private bot for Anthamation's Server of Servitude.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anthamation/Anthabot.git"
+  },
+  "author": "Anthony Rees",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Anthamation/Anthabot/issues"
+  },
+  "homepage": "https://github.com/Anthamation/Anthabot#readme",
+  "contributors": [
+    {
+      "name": "Andrew Black",
+      "email": "andrewblack2656@gmail.com",
+      "url": "https://github.com/FlyingSixtySix"
+    }
+  ],
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  }
+}
