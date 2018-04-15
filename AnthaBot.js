@@ -14,7 +14,7 @@ client.on('ready', () => {
 
 client.on('guildMemberAdd', member => {
     const CurrentTime = new Date();
-    member.send(`Welcome to the Server, ${member.displayName}! I'm Antha-Bot, nice to meet you! Before we can get down to business, you need to read the rules first and find the magic keyword that grants you member access! When you find the keyword, just enter it in the #rules-and-Access channel, and you will be granted access automatically! Need help? My bot suffix is "!Yo!"`);
+    member.send(`Welcome to the Server, ${member.displayName}! I'm Antha-Bot, nice to meet you! Before we can get down to business, you need to read the rules first and find the magic keyword that grants you member access! When you find the keyword, you can enter it in the #rules-and-Access channel OR reply here, and you will be granted access automatically! Need help? My bot suffix is "!Yo!"`);
     console.log(`${member.displayName} has joined the server at ${member.joinedAt}`)
 });
 
@@ -71,7 +71,7 @@ client.on('message', msg => {
         }
             else {
                 member.addRole(MemberRole).then(() => {
-                    msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay :D`)
+                    msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
                     client.on("roleUpdate", MemberRole => {
                         msg.channel.send(`${member.displayName} has been verified! Welcome to the server!`)
                         console.log(`${member.displayName} has been verified via DM on ${CurrentTime}`)
@@ -89,7 +89,7 @@ client.on('message', msg => {
         }
         msg.member.addRole(MemberRole)
         msg.delete()
-        msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay :D`)
+        msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
         .then(() => {
             msg.channel('404304757558345739').sendMessage(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
             console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
