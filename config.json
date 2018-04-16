@@ -1,0 +1,11 @@
+{
+  "token": "",
+  "prefixes": ["!anth", "anth,", "anth", "!antha", "antha", "antha,", "!yo!antha", "!yo!antha,", "yo!antha", "yo!antha,", "!anthabot", "anthabot", "anthabot,"],
+  "log": {
+    "useUTC": true,
+    "saveToFile": true
+  },
+  "blacklist": {
+    "users": []
+  }
+}
