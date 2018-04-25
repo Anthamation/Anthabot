@@ -73,7 +73,7 @@ client.on('message', msg => {
                 member.addRole(MemberRole).then(() => {
                     msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
                     client.on("roleUpdate", MemberRole => {
-                        msg.channel.send(`${member.displayName} has been verified! Welcome to the server!`)
+                        msg.guild.channels.get('404304757558345739').send(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
                         console.log(`${member.displayName} has been verified via DM on ${CurrentTime}`)
                     })
                 })
@@ -85,13 +85,15 @@ client.on('message', msg => {
     if (msg.content.toLowerCase() == 'agree' && msg.channel.id === '404305206743007254') {
         if (msg.member.roles.has(MemberRole.id)) return
             if(!msg.member.roles.has(MemberRole.id)){
-                if (!msg.content.includes() == 'agree')return
+                if (!msg.content.includes() == 'agree'){
+                msg.delete
+                }
         }
         msg.member.addRole(MemberRole)
         msg.delete()
         msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
         .then(() => {
-            msg.channel('404304757558345739').sendMessage(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
+            msg.guild.channels.get('404304757558345739').send(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
             console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
         })
     }
