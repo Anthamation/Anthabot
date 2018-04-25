@@ -84,7 +84,7 @@ client.on('message', msg => {
 
     if (msg.content.toLowerCase() == 'agree' && msg.channel.id === '404305206743007254') {
         if (msg.member.roles.has(MemberRole.id)) return
-            if(!member.roles.has(MemberRole.id)){
+            if(!msg.member.roles.has(MemberRole.id)){
                 if (!msg.content.includes() == 'agree')return
         }
         msg.member.addRole(MemberRole)
