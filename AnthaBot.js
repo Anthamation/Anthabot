@@ -14,7 +14,7 @@ client.on('ready', () => {
 
 client.on('guildMemberAdd', member => {
     const CurrentTime = new Date();
-    member.send(`Welcome to the Server, ${member.displayName}! I'm Antha-Bot, nice to meet you! Before we can get down to business, you need to read the rules first and find the magic keyword that grants you member access! When you find the keyword, you can enter it in the #rules-and-Access channel OR reply here, and you will be granted access automatically! Need help? My bot suffix is "!Yo!"`);
+    member.send(`Welcome to the Server, ${member.displayName}! I'm Antha-Bot, nice to meet you! Before we can get down to business, you need to read the rules first and find the magic keyword that grants you member access! When you find the keyword, you can enter it in the #rules-and-Access channel OR reply here, and you will be granted access automatically! **It's only one word with NO QUOTATIONS.** Need help? My bot suffix is "!Yo!"`);
     console.log(`${member.displayName} has joined the server at ${member.joinedAt}`)
 });
 
@@ -67,7 +67,9 @@ client.on('message', msg => {
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(MemberRole.id)) return
             if(!member.roles.has(MemberRole.id)){
-            if (!msg.content.includes() == 'agree')return
+            if (!msg.content.includes() == 'agree'){
+                msg.author.send("Incorrect! Please Try Again! Remember, it's only ONE word, NOTHING ELSE. If you include other words, **I will not recognize it.**")
+            }
         }
             else {
                 member.addRole(MemberRole).then(() => {
@@ -86,7 +88,8 @@ client.on('message', msg => {
         if (msg.member.roles.has(MemberRole.id)) return
             if(!msg.member.roles.has(MemberRole.id)){
                 if (!msg.content.includes() == 'agree'){
-                msg.delete
+                    msg.member.send("Incorrect! Please Try Again! Remember, it's only ONE word, NOTHING ELSE. If you include other words, **I will not recognize it.**")
+                    msg.delete()
                 }
         }
         msg.member.addRole(MemberRole)
