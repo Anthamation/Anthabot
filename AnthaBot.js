@@ -32,28 +32,43 @@ client.on('message', msg => {
     //User-initiated commands
     //PING
     if (msg.content.startsWith(config.prefix + "ping")) {
+        var GuildID = client.guilds.get('404304756845051905')
+        GuildID.fetchMember(msg.author.id).then (member => {
         msg.reply('Pong!');
-        console.log(`${msg.member.displayName} has used the PING command on ${CurrentTime}`)
-    }
+        console.log(`${member.displayName} has used the PING command on ${CurrentTime}`)
+    })
+}
    //Yes/No Function
     if (msg.content.startsWith(config.prefix + "Anthabot,")) {
+        var GuildID = client.guilds.get('404304756845051905')
+        GuildID.fetchMember(msg.author.id).then (member => {
         msg.reply(YN_list.YN_options[Math.floor(Math.random() * 51)])
-        console.log(`${msg.member.displayName} has used the Y/N command on ${CurrentTime}`)
-    }
+        console.log(`${member.displayName} has used the Y/N command on ${CurrentTime}`)
+    })
+}
     //is your mom gay?
     if (msg.content.startsWith(config.prefix + "is your mom gay?")) {
+        var GuildID = client.guilds.get('404304756845051905')
+        GuildID.fetchMember(msg.author.id).then (member => {
         msg.reply("no u")
-        console.log(`${msg.member.displayName} has used the ISYOURMOMGAY command on ${CurrentTime}`)
-    }
+        console.log(`${member.displayName} has used the ISYOURMOMGAY command on ${CurrentTime}`)
+    })
+}
     //Hello function
     if (msg.content.startsWith(config.prefix + "Hello!")){
+        var GuildID = client.guilds.get('404304756845051905')
+        GuildID.fetchMember(msg.author.id).then (member => {
         msg.reply("Hi there!")
-        console.log(`${msg.member.displayName} has used the Hello! command on ${CurrentTime}`)
+        console.log(`${member.displayName} has used the Hello! command on ${CurrentTime}`)
+    })
     }
     //how are you function
     if (msg.content.startsWith(config.prefix + 'How are you?')){
+        var GuildID = client.guilds.get('404304756845051905')
+        GuildID.fetchMember(msg.author.id).then (member => {  
             msg.reply(hruf_List.HRUFList[Math.floor(Math.random() * 10)])
-            console.log(`${msg.member.displayName} has used the HAY command on ${CurrentTime}`)
+            console.log(`${member.displayName} has used the HAY command on ${CurrentTime}`)
+        })
     }    
 
     
@@ -67,17 +82,14 @@ client.on('message', msg => {
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(MemberRole.id)) return
             if(!member.roles.has(MemberRole.id)){
-            if (!msg.content.includes() == 'agree'){
-                msg.author.send("Incorrect! Please Try Again! Remember, it's only ONE word, NOTHING ELSE. If you include other words, **I will not recognize it.**")
-            }
-        }
-            else {
-                member.addRole(MemberRole).then(() => {
-                    msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
-                    client.on("roleUpdate", MemberRole => {
-                        msg.guild.channels.get('404304757558345739').send(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
-                        console.log(`${member.displayName} has been verified via DM on ${CurrentTime}`)
-                    })
+                if (!msg.content.includes() == 'agree'){
+                    msg.author.send("Incorrect! Please Try Again! Remember, it's only ONE word, NOTHING ELSE. If you include other words, **I will not recognize it.**")
+                }
+                member.addRole(MemberRole)
+                msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
+                .then(() => {
+                    client.channels.get('404304757558345739').send(`${member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
+                    console.log(`${member.displayName} has been verified via DM on ${CurrentTime}`)
                 })
             }
         }
