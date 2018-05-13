@@ -10,13 +10,13 @@ async function execute (member) {
   }
   let welcomeMessage = config.welcomeMessage
   /* Valid variables are:
-   * - server --> Server name
-   * - name --> Username
-   * - accessChannel --> Channel mention for accessChannel
+   * - {server} --> Server name
+   * - {name} --> Username
+   * - {accesschannel} --> Channel mention for accessChannel
    */
-  welcomeMessage = welcomeMessage.replace(/{server}/g, member.guild.name)
-  welcomeMessage = welcomeMessage.replace(/{name}/g, member.user.username)
-  welcomeMessage = welcomeMessage.replace(/{accessChannel}/g, accessChannel)
+  welcomeMessage = welcomeMessage.replace(/{server}/gi, member.guild.name)
+  welcomeMessage = welcomeMessage.replace(/{name}/gi, member.user.username)
+  welcomeMessage = welcomeMessage.replace(/{accesschannel}/gi, accessChannel)
   member.send(welcomeMessage).catch(err => {
     log.error(`Error sending welcome message to ${member.user.tag}`)
     return log.error(err)
