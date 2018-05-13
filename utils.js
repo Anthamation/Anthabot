@@ -62,6 +62,7 @@ function getCommands (name) {
   fs.readdir(path.join(__dirname, 'commands'), (err, files) => {
     if (err) {
       Logger.error(err)
+      return cmds
     }
     for (let i = 0; i < files.length; i++) {
       let file = files[i]
@@ -79,4 +80,28 @@ function getYaml (relLoc) {
   return yaml.safeLoad(fs.readFileSync(path.join(__dirname, relLoc), 'utf8'))
 }
 
-module.exports = { logStream, Logger, getCommands, getYaml }
+function registerEvents (bot) {
+  Logger.debug('Call to registerEvents')
+  let events = {}
+  fs.readdir(path.join(__dirname, 'events'), (err, files) => {
+    if (err) {
+      Logger.error(err)
+      return events
+    }
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i]
+      file = file.replace(/\.\w+/, '')
+      let event = require(path.join(__dirname, 'events', file))
+      Logger.debug(`Listener count for "${event.info.event}": ${bot.listeners(event.info.event).length}`)
+      events[file] = event
+    }
+    Logger.debug(`events: ${JSON.stringify(events)}`)
+    Object.keys(events).forEach(event => {
+      event = events[event]
+      bot.on(event.info.event, event.execute)
+      Logger.debug(`Listening to ${event.info.event}`)
+    })
+  })
+}
+
+module.exports = { logStream, Logger, getCommands, getYaml, registerEvents }

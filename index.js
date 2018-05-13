@@ -11,6 +11,7 @@ bot.on('ready', () => {
   log.info('Ready')
   const now = new Date()
   bot.user.setActivity(`Ready @ ${now.getUTCHours()}:${now.getUTCMinutes()} UTC`)
+  utils.registerEvents(bot)
 })
 
 bot.on('message', message => {
