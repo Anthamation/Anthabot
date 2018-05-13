@@ -7,6 +7,20 @@ const commands = utils.getCommands()
 
 const config = require('./config.json')
 
+exports.debugMode = false
+
+let pargs = process.argv.slice(2)
+const hasArg = flag => pargs.includes(flag.toLowerCase())
+
+switch (true) {
+  case hasArg('-d'):
+  case hasArg('--d'):
+  case hasArg('-debug'):
+  case hasArg('--debug'):
+    exports.debugMode = true
+    break
+}
+
 bot.on('ready', () => {
   log.info('Ready')
   const now = new Date()

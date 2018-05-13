@@ -3,6 +3,7 @@ const path = require('path')
 const yaml = require('js-yaml')
 
 const config = require('./config.json')
+const index = require('./')
 
 const now = new Date(config.useUTC ? Date.UTC() : new Date())
 const year = now.getFullYear()
@@ -47,7 +48,9 @@ class Logger {
   }
   static debug (text) {
     const prefix = this.getLogPrefix('debug')
-    console.debug(prefix + text)
+    if (index.debugMode) {
+      console.debug(prefix + text)
+    }
     if (config.log.saveToFile) {
       logStream.write(prefix + text + '\n')
     }
