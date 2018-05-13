@@ -3,7 +3,7 @@ const log = utils.Logger
 const config = require('../config.json')
 
 async function execute (member) {
-  log.info(`${member.user.tag} has joined ${member.guild.name} at ${member.joinedAt}.`)
+  log.info(`${member.user.tag} has joined ${member.guild.name} at ${member.joinedAt}`)
   let accessChannel = member.guild.channels.get(config.accessChannel)
   if (!accessChannel) {
     accessChannel = '[access channel]'
