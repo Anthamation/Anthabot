@@ -34,8 +34,9 @@ client.on('message', msg => {
     if (msg.content.includes("https://discord.gg/")){
         msg.delete()
         msg.member.send('You are reminded that outside Discord server links are not permitted in the server.')
+        GuildID.fetchMember(msg.author.id).then (member => {
         console.log(`${member.displayName} has had it's Discord link obliterated on ${CurrentTime}`)
-    }
+        })}
 
     //User-initiated commands
     //PING
