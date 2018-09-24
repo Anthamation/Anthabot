@@ -4,7 +4,7 @@ const JsonDB = require('node-json-db');
 const db = new JsonDB("edb", true, true);
 const edb = require("./edb.json")
 const ytm = require('discord.js-musicbot-addon');
-const config = require("./config.json");
+const config = require("./testconfig.json");
 const YN_list = require("./YN_List.json");
 const hruf_List = require("./HRUF.json");
 const wdb = require("/wdb.json");
@@ -257,7 +257,7 @@ client.on('message', msg => {
     //DJ function
     if(msg.content.startsWith(config.prefix + 'DJ')){
         ytm.start(client, {
-        youtubekey: "AIzaSyCNgsR5i_T-YSN815ZqVWeA39duWnclRec",
+        youtubekey: config.api,
         prefix : "!DJ!",
         clearOnLeave : true,
         leaveAlt: "quit",
