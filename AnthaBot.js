@@ -106,7 +106,7 @@ client.on('message', msg => {
         msg.reply('Pong!');
         console.log(`${member.displayName} has used the PING command on ${CurrentTime}`)
     })
-}
+    }
    //Yes/No Function
     if (msg.content.startsWith(config.prefix + "Anthabot,")) {
         var GuildID = client.guilds.get('404304756845051905')
@@ -114,7 +114,7 @@ client.on('message', msg => {
         msg.reply(YN_list.YN_options[Math.floor(Math.random() * 51)])
         console.log(`${member.displayName} has used the Y/N command on ${CurrentTime}`)
     })
-}
+    }
     //is your mom gay?
     if (msg.content.startsWith(config.prefix + " is your mom gay?")) {
         var GuildID = client.guilds.get('404304756845051905')
@@ -122,7 +122,7 @@ client.on('message', msg => {
         msg.reply("no u")
         console.log(`${member.displayName} has used the ISYOURMOMGAY command on ${CurrentTime}`)
     })
-}
+    }
     //Hello function
     if (msg.content.startsWith(config.prefix + "Hello!")){
         var GuildID = client.guilds.get('404304756845051905')
@@ -137,7 +137,7 @@ client.on('message', msg => {
         GuildID.fetchMember(msg.author.id).then (member => {  
             msg.reply(hruf_List.HRUFList[Math.floor(Math.random() * 10)])
             console.log(`${member.displayName} has used the HAY command on ${CurrentTime}`)
-        })
+    })
     }
     //help function
     if(msg.content.startsWith(config.prefix + 'Help')){
@@ -282,43 +282,44 @@ client.on('message', msg => {
                 msg.reply('You do not have permission to use this command.')
             }
         })
-    }}
+    }
+    
     if(msg.content.startsWith('!DJ!resume')){
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(AdminRole.id)) return
             if(!member.roles.has(AdminRole.id)){
                 msg.reply('You do not have permission to use this command.'
-        )}
+        )}})}
     if(msg.content.startsWith('!DJ!volume')){
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(AdminRole.id)) return
             if(!member.roles.has(AdminRole.id)){
                 msg.reply('You do not have permission to use this command.'
-        )}
+        )}})}
     if(msg.content.startsWith('!DJ!leave')){
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(AdminRole.id)) return
             if(!member.roles.has(AdminRole.id)){
                 msg.reply('You do not have permission to use this command.'
-        )}
+        )}})}
     if(msg.content.startsWith('!DJ!join')){
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(AdminRole.id)) return
             if(!member.roles.has(AdminRole.id)){
                 msg.reply('You do not have permission to use this command.'
-        )}
+        )}})}
     if(msg.content.startsWith('!DJ!volume')){
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(AdminRole.id)) return
             if(!member.roles.has(AdminRole.id)){
                 msg.reply('You do not have permission to use this command.'
-        )}
+        )}})}
     if(msg.content.startsWith('!DJ!clearqueue')){
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(AdminRole.id)) return
             if(!member.roles.has(AdminRole.id)){
                 msg.reply('You do not have permission to use this command.'
-        )}    
+        )}})}    
     //DJ Help
     if(msg.content.startsWith('!DJ!help')){
         GuildID.fetchMember(msg.author.id).then (member => {
@@ -388,10 +389,7 @@ client.on('message', msg => {
       text: "This DJ function uses the [discord.js-musicbot-addon](https://www.npmjs.com/package/discord.js-musicbot-addon) made by DarkoPendragon."
     }
   }
-})})
-        
-
-    }
+})})}
     //Admin Commands
     //A.Warn
     if(msg.content.startsWith(config.prefix + "Warn")){
@@ -438,7 +436,7 @@ client.on('message', msg => {
       msg.member.send('You didn\'t mention the user to kick!');
     }
   }
-});
+})
 }
     //A.Ban    
 if (msg.content.startsWith(config.prefix + "ban")) {
@@ -540,5 +538,4 @@ if (msg.content.startsWith(config.prefix + "kick")) {
             msg.guild.channels.get('404304757558345739').send(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
             console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
         })
-    }
-})
+    }}})
