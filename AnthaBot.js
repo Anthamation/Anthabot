@@ -14,6 +14,13 @@ client.login(config.token)
 
 
 client.on('ready', () => {
+    ytm.start(client, {
+        youtubeKey: config.api,
+        prefix : "!DJ!",
+        clearOnLeave : true,
+        leaveAlt: ["quit"],
+        helpCmd: "help with",})
+    
     console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`);
     db.getData("/");
 
@@ -203,7 +210,7 @@ client.on('message', msg => {
         },
         {
         name: "Kick",
-        description:"**Usage:**!Yo!kick <Mentioned Member>",
+        description: "**Usage:**!Yo!kick <Mentioned Member>",
         value: "Give that member the boot. __Use this role with responsibily.__"
       }
     ],
@@ -251,19 +258,7 @@ client.on('message', msg => {
 }    
 })
 }
-    //DJ function
-    if(msg.content.startsWith(config.prefix + 'DJ')){
-        ytm.start(client, {
-        youtubekey: config.api,
-        prefix : "!DJ!",
-        clearOnLeave : true,
-        leaveAlt: "quit",
-        helpCmd: "help with",
-    });
-    msg.reply("DJ mode enabled! Use prefix !DJ! is now in use. To disable DJ mode, use !DJ!quit. Need help? Use !DJ!help.")
-    if(msg.content.startsWith('!DJ!quit')){
-        msg.reply('DJ mode disabled.')
-    }
+    //DJ function/controls
     if(msg.content.startsWith('!DJ!skip')){
         GuildID.fetchMember(msg.author.id).then (member => {
             if (member.roles.has(AdminRole.id)) return
@@ -548,5 +543,4 @@ if (msg.content.startsWith(config.prefix + "kick")) {
         .then(() => {
             msg.guild.channels.get('404304757558345739').send(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
             console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
-        })
-    }}})
+        })}})
