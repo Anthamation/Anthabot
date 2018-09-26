@@ -12,7 +12,6 @@ const fs = require('fs');
 
 client.login(config.token)
 
-
 client.on('ready', () => {
     ytm.start(client, {
         youtubeKey: config.api,
@@ -22,8 +21,6 @@ client.on('ready', () => {
         helpCmd: "help with",})
     
     console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`);
-    db.getData("/");
-
     var UserID = member.id;
     let unverified = edb.unverified
     for (let i = 0; i < unverified.length; i++){
@@ -151,38 +148,39 @@ client.on('message', msg => {
                 member.send("You have not been verified yet, so there are no commands available for you.")
             }
             if(member.roles.has(MemberRole.id)){
-                member.send({embed: {
+    member.send({embed: {
+    Title: "Your commands as a Member",
     color: 3447003,
     author: {
       name: client.user.username,
       icon_url: client.user.avatarURL
     },
-    title: "**__Your commands as a Member__**",
-    description:"My prefix is !Yo!",
+    title: "Ping",
+    description:"Test the ping.",
     fields: [{
         name: "Ping",
         description:"**Usage:**!Yo!ping",
-        value: "Test the ping"
+        description: "Test the ping"
       },
       {
         name: "Ask Anthabot(Yes/No)",
         description:"**Usage:**!Yo!Anthabot, <Any Yes/No>",
-        value: "Ask the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+        description: "Ask the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
       },
       {
         name: "Hello",
         description: "**Usage:**!Yo!Hello",
-        value: "Say hello to the bot!"
+        description: "Say hello to the bot!"
       },
       {
         name: "How are you?",
         description: "**Usage:**!Yo!How are you?",
-        value: "Ask the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
+        description: "Ask the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
       },
       {
         name: "DJ",
         description: "**Usage:**!Yo!DJ",
-        value: "Enables DJ mode. Use the bot to play music in the VC. For DJ help, use !DJ!help"
+        description: "Enables DJ mode. Use the bot to play music in the VC. For DJ help, use !DJ!help"
       },
     ],
     timestamp: new Date(),
@@ -200,22 +198,22 @@ client.on('message', msg => {
       name: client.user.username,
       icon_url: client.user.avatarURL
     },
-    title: "**__Your commands as a Moderator__**",
+    title: "Your commands as a Moderator",
     description:"My prefix is !Yo!",
     fields: [
         {
           name: "Warn",
           description: "**Usage:**!Yo!warn <Mentioned Member>",
-          value:"Give a warning to a member acting up. Max cap is 3 until kicked."
+          description:"Give a warning to a member acting up. Max cap is 3 until kicked."
         },
         {
         name: "Kick",
         description: "**Usage:**!Yo!kick <Mentioned Member>",
-        value: "Give that member the boot. __Use this role with responsibily.__"
+        description: "Give that member the boot. __Use this role with responsibily.__"
       }
     ],
     timestamp: new Date(),
-    footer: {
+    description: {
       icon_url: client.user.avatarURL,
       text: "This bot was proudly made by Anthony Rees and [FlyingSixtySix](https://github.com/FlyingSixtySix)"
     }
@@ -229,23 +227,23 @@ client.on('message', msg => {
       name: client.user.username,
       icon_url: client.user.avatarURL
     },
-    title: "**__Your commands as an Admin__**",
+    title: "Your commands as an Admin",
     description:"My prefix is !Yo!",
     fields: [
         {
           name: "Warn",
           description: "**Usage:**!Yo!warn <Mentioned Member>",
-          value:"Give a warning to a member acting up. Max cap is 3 until kicked."
+          description:"Give a warning to a member acting up. Max cap is 3 until kicked."
         },
         {
         name: "Kick",
         description:"**Usage:**!Yo!kick <Mentioned Member>",
-        value: "Give that member the boot. __Use this role with responsibily.__"
+        description: "Give that member the boot. __Use this role with responsibily.__"
     },
     {
         name: "Ban",
         description:"**Usage:**!Yo!ban <Mentioned Member>",
-        value: "Ban this member forever. **__Use this role with EVEN MORE responsibily.__**"
+        description: "Ban this member forever. **__Use this role with EVEN MORE responsibily.__**"
     }
     ],
     timestamp: new Date(),
