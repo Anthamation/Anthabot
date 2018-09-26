@@ -4,38 +4,35 @@ const JsonDB = require('node-json-db');
 const db = new JsonDB("edb", true, true);
 const edb = require("./edb.json")
 const ytm = require('discord.js-musicbot-addon');
-const config = require("./testconfig.json");
+const config = require("./config.json");
 const YN_list = require("./YN_List.json");
 const hruf_List = require("./HRUF.json");
-const wdb = require("/wdb.json");
-
+const wdb = require("./wdb.json");
+const fs = require('fs');
 
 client.login(config.token)
 
 
 client.on('ready', () => {
-    console.log(`Anthabot 1.0.5 STABLE successfully connected. Awaiting Commands`);
+    console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`);
     db.getData("/");
+
+    var UserID = member.id;
     let unverified = edb.unverified
+    for (let i = 0; i < unverified.length; i++){
     let id = unverified[i].UserID
         var GuildID = client.guilds.get('404304756845051905')
         let time = unverified[i].UserEX
-    if(new Date().getTime() > time){
-            GuildID.fetchMember(id).then (
+    if(new Date().getTime() >= time){
+            GuildID.fetchMember(id).then (member => {
                 member.kick("You have failed to verify yourself. If you wish to try again, please find another invite.")
-            )
-            edb.unverified = unverified.filter(entry => enter.UserID != id).then (
+                edb.unverified = unverified.filter(entry => entry.UserID != id).then(() => {
                 client.on('guildMemberRemove', member => {
                     console.log(`${member.displayName} failed to verify. Kicking...`)
-                    db.push("/",JSON.stringify(edb, null, 2), true)
-                    db.reload()
-                })
-            )
-            
-        }
-
-    }
-);
+                    fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err => {
+                        if(err){
+                            console.error(err)
+                        }})})})})}}});
 
 /*things to work on: Server greeting and access*/
 
@@ -43,7 +40,7 @@ client.on('guildMemberAdd', member => {
     var CurrentTime = new Date();
     var cms = CurrentTime.getTime();
     var UserID = member.id;
-    var UserEX = cms + 259200000;
+    var UserEX = cms + 30000;
     var uis = {UserID, UserEX};
         var datapath = "/unverified[]";
         db.push("/unverified[]", uis);
@@ -53,17 +50,17 @@ client.on('guildMemberAdd', member => {
         let id = unverified[i].UserID
         var GuildID = client.guilds.get('404304756845051905')
         let time = unverified[i].UserEX
-        if(new Date().getTime() > time){
+        if(new Date().getTime() >= time){
             GuildID.fetchMember(id).then (
                 member.kick("You have failed to verify yourself. If you wish to try again, please find another invite.")
             )
-            edb.unverified = unverified.filter(entry => enter.UserID != id).then (
+            edb.unverified = unverified.filter(entry => enter.UserID != id).then(() => {
                 client.on('guildMemberRemove', member => {
                     console.log(`${member.displayName} failed to verify. Kicking...`)
                     db.push("/", JSON.stringify(edb, null, 2), true)
                     db.reload()
                 })
-            )
+            })
             
         }
     }
@@ -504,13 +501,20 @@ if (msg.content.startsWith(config.prefix + "kick")) {
                 if (!msg.content.includes() == 'agree'){
                     msg.author.send("Incorrect! Please Try Again! Remember, it's only ONE word, NOTHING ELSE. If you include other words, **I will not recognize it.**")
                 }
+                let unverified = edb.unverified
+        for (let i = 0; i < unverified.length; i++){
+            let id = unverified[i].UserID
+            edb.unverified = unverified.filter(entry => entry.UserID != id)
+            fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err =>{
+                if(err){
+                    console.error(err)
+                }
+            })
+            console.log(`${member.id} was removed from the database.`)
+        }
                 member.addRole(MemberRole)
                 msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
                 .then(() => {
-                    db.delete(dps)
-                    var deletepath = "/unverified/userID"
-                    var dps = deletepath.replace("userID", member.id)
-                    db.reload()
                     client.channels.get('404304757558345739').send(`${member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
                     console.log(`${member.displayName} has been verified via DM on ${CurrentTime}`)
                 })
@@ -527,14 +531,21 @@ if (msg.content.startsWith(config.prefix + "kick")) {
                     msg.delete()
                 }
         }
+        let unverified = edb.unverified
+        for (let i = 0; i < unverified.length; i++){
+            let id = unverified[i].UserID
+            edb.unverified = unverified.filter(entry => entry.UserID != id)
+            fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err =>{
+                if(err){
+                    console.error(err)
+                }
+            })
+            console.log(`${member.id} was removed from the database.`)
+        }
         msg.member.addRole(MemberRole)
         msg.delete()
         msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
         .then(() => {
-            db.delete(dps)
-                    var deletepath = "/unverified/userID"
-                    var dps = deletepath.replace("userID", msg.member.id)
-                    db.reload();
             msg.guild.channels.get('404304757558345739').send(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
             console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
         })
