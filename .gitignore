@@ -4308,3 +4308,11 @@ node_modules/ytsearcher/package.json
 node_modules/ytsearcher/README.md
 package-lock.json
 package-lock.json
+node_modules/opusscript/.gitmodules
+node_modules/opusscript/build/COPYING.libopus
+node_modules/opusscript/build/opusscript_native.js
+node_modules/opusscript/index.d.ts
+node_modules/opusscript/index.js
+node_modules/opusscript/LICENSE
+node_modules/opusscript/package.json
+node_modules/opusscript/README.md
