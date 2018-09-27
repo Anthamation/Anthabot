@@ -36,7 +36,7 @@ client.on('ready', () => {
                             console.error(err)
                         }})})})})}}});
 
-/*things to work on: Server KickDB, Incorrect counter, Warning counter w/DB, Imagery, donation, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
+/*things to work on: Server KickDB, Incorrect counter, Warning counter w/DB, Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
 
 client.on('guildMemberAdd', member => {
     var CurrentTime = new Date();
@@ -85,6 +85,7 @@ client.on('message', msg => {
     let MemberRole = GuildID.roles.get('404333218922233858')
     let ModRole = GuildID.roles.get('404332197986697216')
     let AdminRole = GuildID.roles.get('404332617190735873')
+    let AnthRole = GuildID.roles.get('404332188536930314')
     var generalChannel = client.channels.get('404304757558345739')
     //Below is the prevention of Botception.
     if (msg.author.bot) return
@@ -366,6 +367,7 @@ client.on('message', msg => {
     }
   }
 })})}
+    //anthony's commands
     //Admin Commands
     //A.Warn
     if(msg.content.startsWith(config.prefix + "Warn")){
