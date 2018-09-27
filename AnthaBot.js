@@ -19,9 +19,7 @@ client.on('ready', () => {
         clearOnLeave : true,
         leaveAlt: ["quit"],
         helpCmd: "help with",})
-    
-    console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`);
-    var UserID = member.id;
+    console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`)
     let unverified = edb.unverified
     for (let i = 0; i < unverified.length; i++){
     let id = unverified[i].UserID
