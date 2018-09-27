@@ -18,7 +18,7 @@ client.on('ready', () => {
         prefix : "!DJ!",
         clearOnLeave : true,
         leaveAlt: ["quit"],
-        helpCmd: "help with",})
+        helpCmd: "helpwith",})
     console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`)
     let unverified = edb.unverified
     for (let i = 0; i < unverified.length; i++){
@@ -36,7 +36,7 @@ client.on('ready', () => {
                             console.error(err)
                         }})})})})}}});
 
-/*things to work on: Server greeting and access*/
+/*things to work on: Server KickDB, Incorrect counter, Warning counter w/DB, Imagery, donation, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
 
 client.on('guildMemberAdd', member => {
     var CurrentTime = new Date();
@@ -147,38 +147,36 @@ client.on('message', msg => {
             }
             if(member.roles.has(MemberRole.id)){
     member.send({embed: {
-    Title: "Your commands as a Member",
+    Title: "Your commands as a **__Member__**",
     color: 3447003,
     author: {
       name: client.user.username,
       icon_url: client.user.avatarURL
     },
-    title: "Ping",
-    description:"Test the ping.",
     fields: [{
         name: "Ping",
-        description:"**Usage:**!Yo!ping",
-        description: "Test the ping"
+        value:"__**Usage:**__!Yo!ping__",
+        value: "Test the ping"
       },
       {
         name: "Ask Anthabot(Yes/No)",
-        description:"**Usage:**!Yo!Anthabot, <Any Yes/No>",
-        description: "Ask the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+        value:"__**Usage:**!Yo!Anthabot, <Any Yes/No>__",
+        value: "Ask the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
       },
       {
         name: "Hello",
-        description: "**Usage:**!Yo!Hello",
-        description: "Say hello to the bot!"
+        value: "__**Usage:__**!Yo!Hello__",
+        value: "Say hello to the bot!"
       },
       {
         name: "How are you?",
-        description: "**Usage:**!Yo!How are you?",
-        description: "Ask the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
+        value: "__**Usage:**!Yo!How are you?__",
+        value: "Ask the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
       },
       {
         name: "DJ",
-        description: "**Usage:**!Yo!DJ",
-        description: "Enables DJ mode. Use the bot to play music in the VC. For DJ help, use !DJ!help"
+        value: "__**Usage:**!DJ!<DJ command>__",
+        value: "Enables DJ mode. Use the bot to play music in the VC you are currently in. __For DJ help, use !DJ!help with for a list of commands.__"
       },
     ],
     timestamp: new Date(),
@@ -196,18 +194,18 @@ client.on('message', msg => {
       name: client.user.username,
       icon_url: client.user.avatarURL
     },
-    title: "Your commands as a Moderator",
-    description:"My prefix is !Yo!",
+    title: "Your commands as a **__Moderator__**",
+    description:"My prefix is __!Yo!__",
     fields: [
         {
           name: "Warn",
-          description: "**Usage:**!Yo!warn <Mentioned Member>",
-          description:"Give a warning to a member acting up. Max cap is 3 until kicked."
+          value: "__**Usage:**!Yo!warn <Mentioned Member>__",
+          value:"Give a warning to a member acting up. Max cap is 3 until kicked."
         },
         {
         name: "Kick",
-        description: "**Usage:**!Yo!kick <Mentioned Member>",
-        description: "Give that member the boot. __Use this role with responsibily.__"
+        value: "__**Usage:**!Yo!kick <Mentioned Member>__",
+        value: "Give that member the boot. __**Use this command with responsibily.**__"
       }
     ],
     timestamp: new Date(),
@@ -225,23 +223,13 @@ client.on('message', msg => {
       name: client.user.username,
       icon_url: client.user.avatarURL
     },
-    title: "Your commands as an Admin",
-    description:"My prefix is !Yo!",
+    title: "Your commands as an **__Admin__**",
+    description:"My prefix is __!Yo!__",
     fields: [
-        {
-          name: "Warn",
-          description: "**Usage:**!Yo!warn <Mentioned Member>",
-          description:"Give a warning to a member acting up. Max cap is 3 until kicked."
-        },
-        {
-        name: "Kick",
-        description:"**Usage:**!Yo!kick <Mentioned Member>",
-        description: "Give that member the boot. __Use this role with responsibily.__"
-    },
     {
         name: "Ban",
-        description:"**Usage:**!Yo!ban <Mentioned Member>",
-        description: "Ban this member forever. **__Use this role with EVEN MORE responsibily.__**"
+        value:"__**Usage:**!Yo!ban <Mentioned Member>__",
+        value: "Ban this member forever. ***__Use this command with EVEN MORE responsibily.__***"
     }
     ],
     timestamp: new Date(),
@@ -322,59 +310,59 @@ client.on('message', msg => {
     fields: [
         {
         name: "Detailed command help",
-        description: "**Usage:**!DJ!help with <command>",
-        value:""
+        value: "__**Usage:**!DJ!help with <command>__",
+        value:"Specific help with a certain command"
         },
         {
         name: "Play",
-        description:"**Usage:**!DJ!play <url> | <search>",
+        value:"__**Usage:**!DJ!play <url> | <search>__",
         value: "Play audio from YouTube"
         },
         {
         name: "Skip",
-        description:"**Usage:**!DJ!skip [number]",
+        value:"__**Usage:**!DJ!skip [number]__",
         value: "Skip a song or multi songs with skip [some number]. Only Admins can use this command"
         },
         {
         name: "Queue",
-        description:"**Usage:**!DJ!queue [index]",
+        value:"__**Usage:**!DJ!queue [index]__",
         value: "Display the current queue or an item from the queue."
         },
         {
         name: "Pause",
-        description:"**Usage:**!DJ!pause",
+        value:"__**Usage:**!DJ!pause__",
         value: "Pause music playback. Only admins can use this command."
         },
         {
         name: "Resume",
-        description:"**Usage:**!DJ!resume",
+        value:"__**Usage:**!DJ!resume__",
         value: "Resumes music playback. Only admins can use this command."
         },
         {
         name: "Volume",
-        description:"**Usage:**!DJ!volume <number>",
+        value:"__**Usage:**!DJ!volume <number>__",
         value: "Adjust the playback volume between 1 and 200. Only admins can use this command."
         },
         {
         name: "Join",
-        description:"**Usage:**!DJ!join",
+        value:"__**Usage:**!DJ!join__",
         value: "Joins your currently connected channel. Only Admins can use this command."
         },
         {
         name: "Leave",
-        description:"**Usage:**!DJ!leave",
+        value:"__**Usage:**!DJ!leave__",
         value: "Leaves your currently connected channel. Only Admins can use this command."
         },
         {
         name: "Clear Queue",
-        description:"**Usage:**!DJ!clearqueue",
+        value:"__**Usage:**!DJ!clearqueue__",
         value: "Clears the song queue. Only Admins can use this command."
         },
     ],
     timestamp: new Date(),
     footer: {
       icon_url: client.user.avatarURL,
-      text: "This DJ function uses the [discord.js-musicbot-addon](https://www.npmjs.com/package/discord.js-musicbot-addon) made by DarkoPendragon."
+      text: "The DJ function uses the [discord.js-musicbot-addon](https://www.npmjs.com/package/discord.js-musicbot-addon) made by DarkoPendragon."
     }
   }
 })})}
