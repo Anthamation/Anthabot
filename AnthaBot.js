@@ -28,13 +28,13 @@ client.on('ready', () => {
     if(new Date().getTime() >= time){
             GuildID.fetchMember(id).then (member => {
                 member.kick("You have failed to verify yourself. If you wish to try again, please find another invite.")
-                edb.unverified = unverified.filter(entry => entry.UserID != id).then(() => {
+                edb.unverified = unverified.filter(entry => entry.UserID != id)
                 client.on('guildMemberRemove', member => {
                     console.log(`${member.displayName} failed to verify. Kicking...`)
                     fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err => {
                         if(err){
                             console.error(err)
-                        }})})})})}}});
+                        }})})})}}});
 
 /*things to work on: Server KickDB, Incorrect counter, Warning counter w/DB, Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
 
@@ -53,16 +53,16 @@ client.on('guildMemberAdd', member => {
         var GuildID = client.guilds.get('404304756845051905')
         let time = unverified[i].UserEX
         if(new Date().getTime() >= time){
-            GuildID.fetchMember(id).then (
+            GuildID.fetchMember(id).then(
                 member.kick("You have failed to verify yourself. If you wish to try again, please find another invite.")
             )
-            edb.unverified = unverified.filter(entry => enter.UserID != id).then(() => {
+            edb.unverified = unverified.filter(entry => entry.UserID != id)
                 client.on('guildMemberRemove', member => {
                     console.log(`${member.displayName} failed to verify. Kicking...`)
                     db.push("/", JSON.stringify(edb, null, 2), true)
                     db.reload()
                 })
-            })
+            
             
         }
     }
