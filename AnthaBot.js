@@ -48,6 +48,7 @@ client.on('guildMemberAdd', member => {
         db.push("/unverified[]", uis);
         db.reload();
     let unverified = edb.unverified 
+    setInterval(function(){
     for (let i = 0; i < unverified.length; i++){
         let id = unverified[i].UserID
         var GuildID = client.guilds.get('404304756845051905')
@@ -66,6 +67,7 @@ client.on('guildMemberAdd', member => {
             
         }
     }
+    },1000)
     member.send(`Welcome to the Server, ${member.displayName}! I'm Antha-Bot, nice to meet you! Before we can get down to business, you need to verify yourself by reading the rules and find the magic keyword that grants you member access! When you find the keyword, you can enter it in the #rules-and-Access channel OR reply here, and you will be granted access automatically! Do it quick! You have 3 days until you are kicked from the server! **It's only one word with NO QUOTATIONS.** Need help? My bot suffix is "!Yo!"`);
     console.log(`${member.displayName} has joined the server at ${member.joinedAt}`)
 });
