@@ -157,7 +157,6 @@ client.on('message', msg => {
     fields: [{
         name: "Ping",
         value:"__**Usage:**__!Yo!ping__",
-        
       },
       {
           value: "Test the ping"
@@ -165,7 +164,6 @@ client.on('message', msg => {
       {
         name: "Ask Anthabot(Yes/No)",
         value:"__**Usage:**!Yo!Anthabot, <Any Yes/No>__",
-        
       },
       {
           value: "Ask the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
@@ -180,7 +178,6 @@ client.on('message', msg => {
       {
         name: "How are you?",
         value: "__**Usage:**!Yo!How are you?__",
-        
       },
       {
           value: "Ask the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
@@ -188,7 +185,6 @@ client.on('message', msg => {
       {
         name: "DJ",
         value: "__**Usage:**!DJ!<DJ command>__",
-        
       },
       {
           value: "Enables DJ mode. Use the bot to play music in the VC you are currently in. __For DJ help, use !DJ!help with for a list of commands.__"
@@ -550,7 +546,10 @@ if (msg.content.startsWith(config.prefix + "kick")) {
                 if (!msg.content.includes() == 'agree'){
                     msg.author.send("Incorrect! Please Try Again! Remember, it's only ONE word, NOTHING ELSE. If you include other words, **I will not recognize it.**")
                 }
-                let unverified = edb.unverified
+                member.addRole(MemberRole)
+                msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
+                .then(() => {
+                    let unverified = edb.unverified
         for (let i = 0; i < unverified.length; i++){
             let id = unverified[i].UserID
             edb.unverified = unverified.filter(entry => entry.UserID != id)
@@ -561,9 +560,6 @@ if (msg.content.startsWith(config.prefix + "kick")) {
             })
             console.log(`${member.id} was removed from the database.`)
         }
-                member.addRole(MemberRole)
-                msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
-                .then(() => {
                     client.channels.get('404304757558345739').send(`${member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
                     console.log(`${member.displayName} has been verified via DM on ${CurrentTime}`)
                 })
@@ -580,7 +576,12 @@ if (msg.content.startsWith(config.prefix + "kick")) {
                     msg.delete()
                 }
         }
-        let unverified = edb.unverified
+
+        msg.member.addRole(MemberRole)
+        msg.delete()
+        msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
+        .then(() => {
+            let unverified = edb.unverified
         for (let i = 0; i < unverified.length; i++){
             let id = unverified[i].UserID
             edb.unverified = unverified.filter(entry => entry.UserID != id)
@@ -589,12 +590,8 @@ if (msg.content.startsWith(config.prefix + "kick")) {
                     console.error(err)
                 }
             })
-            console.log(`${member.id} was removed from the database.`)
+            console.log(`${msg.member.id} was removed from the database.`)
         }
-        msg.member.addRole(MemberRole)
-        msg.delete()
-        msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
-        .then(() => {
             msg.guild.channels.get('404304757558345739').send(`${msg.member.displayName} has been verified and confirmed as a new member! Please welcome them to the server!`)
             console.log(`${msg.member.displayName} has been verified via Guild Channel on ${CurrentTime}`)
         })}})
