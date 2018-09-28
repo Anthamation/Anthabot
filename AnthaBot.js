@@ -29,12 +29,11 @@ client.on('ready', () => {
             GuildID.fetchMember(id).then (member => {
                 member.kick("You have failed to verify yourself. If you wish to try again, please find another invite.")
                 edb.unverified = unverified.filter(entry => entry.UserID != id)
-                client.on('guildMemberRemove', member => {
-                    console.log(`${member.displayName} failed to verify. Kicking...`)
-                    fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err => {
-                        if(err){
-                            console.error(err)
-                        }})})})}}});
+                console.log(`${member.displayName} failed to verify. Kicking...`)
+                fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err => {
+                    if(err){
+                        console.error(err)
+                        }})})}}});
 
 /*things to work on: Server KickDB, Incorrect counter, Warning counter w/DB, Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
 
@@ -54,17 +53,16 @@ client.on('guildMemberAdd', member => {
         var GuildID = client.guilds.get('404304756845051905')
         let time = unverified[i].UserEX
         if(new Date().getTime() >= time){
-            GuildID.fetchMember(id).then(
+            GuildID.fetchMember(id).then(() => {
                 member.kick("You have failed to verify yourself. If you wish to try again, please find another invite.")
-            )
+            })
             edb.unverified = unverified.filter(entry => entry.UserID != id)
-                client.on('guildMemberRemove', member => {
-                    console.log(`${member.displayName} failed to verify. Kicking...`)
-                    db.push("/", JSON.stringify(edb, null, 2), true)
-                    db.reload()
-                })
-            
-            
+                    edb.unverified = unverified.filter(entry => entry.UserID != id)
+                console.log(`${member.displayName} failed to verify. Kicking...`)
+                fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err => {
+                    if(err){
+                        console.error(err)
+                        }})
         }
     }
     },1000)
@@ -159,27 +157,41 @@ client.on('message', msg => {
     fields: [{
         name: "Ping",
         value:"__**Usage:**__!Yo!ping__",
-        value: "Test the ping"
+        
+      },
+      {
+          value: "Test the ping"
       },
       {
         name: "Ask Anthabot(Yes/No)",
         value:"__**Usage:**!Yo!Anthabot, <Any Yes/No>__",
-        value: "Ask the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+        
+      },
+      {
+          value: "Ask the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
       },
       {
         name: "Hello",
-        value: "__**Usage:__**!Yo!Hello__",
-        value: "Say hello to the bot!"
+        value: "__**Usage:__**!Yo!Hello__", 
+      },
+      {
+          value: "Say hello to the bot!"
       },
       {
         name: "How are you?",
         value: "__**Usage:**!Yo!How are you?__",
-        value: "Ask the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
+        
+      },
+      {
+          value: "Ask the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
       },
       {
         name: "DJ",
         value: "__**Usage:**!DJ!<DJ command>__",
-        value: "Enables DJ mode. Use the bot to play music in the VC you are currently in. __For DJ help, use !DJ!help with for a list of commands.__"
+        
+      },
+      {
+          value: "Enables DJ mode. Use the bot to play music in the VC you are currently in. __For DJ help, use !DJ!help with for a list of commands.__"
       },
     ],
     timestamp: new Date(),
@@ -203,13 +215,19 @@ client.on('message', msg => {
         {
           name: "Warn",
           value: "__**Usage:**!Yo!warn <Mentioned Member>__",
-          value:"Give a warning to a member acting up. Max cap is 3 until kicked."
+          
         },
+        {
+          value:"Give a warning to a member acting up. Max cap is 3 until kicked."
+      },
         {
         name: "Kick",
         value: "__**Usage:**!Yo!kick <Mentioned Member>__",
-        value: "Give that member the boot. __**Use this command with responsibily.**__"
-      }
+        
+      },
+      {
+          value: "Give that member the boot. __**Use this command with responsibily.**__"
+      },
     ],
     timestamp: new Date(),
     description: {
@@ -232,8 +250,11 @@ client.on('message', msg => {
     {
         name: "Ban",
         value:"__**Usage:**!Yo!ban <Mentioned Member>__",
-        value: "Ban this member forever. ***__Use this command with EVEN MORE responsibily.__***"
-    }
+        
+    },
+    {
+          value: "Ban this member forever. ***__Use this command with EVEN MORE responsibily.__***"
+      },
     ],
     timestamp: new Date(),
     footer: {
@@ -384,8 +405,13 @@ client.on('message', msg => {
         if(member.roles.has(AdminRole.id)){
             if (user) {
                 if (member) {
+                    if (user.id = 262477177449086976){
+                    msg.author.send("You cannot use this command for the owner.")
+                    return
+                }else {
                     msg.member.send('Your action have been brought to an Admins attention. You have been warned.')
-                }
+                    console.log(`${msg.author.username} has warned ${member.displayName} on ${CurrentTime}`)
+                }} 
             }
         }
         })
@@ -403,13 +429,19 @@ client.on('message', msg => {
         if(member.roles.has(AdminRole.id)){
         if (user) {
             if (member) {
+                if (user.id = 262477177449086976){
+                    msg.author.send("You cannot use this command for the owner.")
+                    return
+                }
+                else {
                 member.kick('Optional reason that will display in the audit logs').then(() => {
-                console.log(`Successfully kicked ${user.tag}`);
+                console.log(`${msg.author.username} has kicked ${member.displayName} on ${CurrentTime}`);
             }).catch(err => {
           msg.reply('I was unable to kick the member');
           console.error(err);
         });
-      } else {
+      }}
+       else {
         msg.member.send('That user isn\'t in this guild!');
       }
     } else {
@@ -430,13 +462,18 @@ if (msg.content.startsWith(config.prefix + "ban")) {
         if(member.roles.has(AdminRole.id)){
         if (user) {
             if (member) {
+                if (user.id = 262477177449086976){
+                    msg.author.send("You cannot use this command for the owner.")
+                    return
+                }
+                else{
                 member.ban('Optional reason that will display in the audit logs').then(() => {
-                console.log(`Successfully banned ${user.tag} by ${msg.member.displayName}`);
+                console.log(`${msg.author.username} has banned ${member.displayName} on ${CurrentTime}`);
             }).catch(err => {
           console.log('I was unable to kick the member');
           console.error(err);
         });
-      } else {
+      }} else {
         msg.member.send('That user isn\'t in this guild!');
       }
     } else {
@@ -446,6 +483,30 @@ if (msg.content.startsWith(config.prefix + "ban")) {
 });
 }
 //Moderator commands
+//M.Warn
+if(msg.content.startsWith(config.prefix + "Warn")){
+        const user = msg.mentions.users.first();
+        GuildID.fetchMember(msg.author.id).then (member => {
+            if(!member.roles.has(ModRole.id)){
+                msg.delete()
+                msg.member.send('You do not have permission to use this command.')
+                return
+            }
+            if(member.roles.has(AdminRole.id)) return
+        if(member.roles.has(ModRole.id)){
+            if (user) {
+                if (member) {
+                    if (user.id = 262477177449086976){
+                    msg.author.send("You cannot use this command for the owner.")
+                    return
+                }else {
+                    msg.member.send('Your action have been brought to a moderators attention. You have been warned.')
+                    console.log(`${msg.author.username} has warned ${member.displayName} on ${CurrentTime}`)
+                }} 
+            }
+        }
+        })
+    }
 //M.kick
 if (msg.content.startsWith(config.prefix + "kick")) {
    
@@ -459,13 +520,18 @@ if (msg.content.startsWith(config.prefix + "kick")) {
         if(member.roles.has(ModRole.id)){
         if (user) {
             if (member) {
+                if (user.id = 262477177449086976){
+                    msg.author.send("You cannot use this command for the owner.")
+                    return
+                }
+                else {
                 member.kick('Optional reason that will display in the audit logs').then(() => {
-                msg.reply(`Successfully kicked ${user.tag}`);
+                console.log(`${msg.author.username} has kicked ${member.displayName} on ${CurrentTime}`);;
             }).catch(err => {
           msg.reply('I was unable to kick the member');
           console.error(err);
         });
-      } else {
+      }} else {
         msg.member.send('That user isn\'t in this guild!');
       }
     } else {
