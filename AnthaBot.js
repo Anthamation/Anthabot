@@ -173,7 +173,7 @@ client.on('message', msg => {
       },
       {
         name: "DJ",
-        value: "__**Usage:**!DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. __For DJ help, use !DJ!help with for a list of commands.__",
+        value: "__**Usage:**!DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. For DJ help, use !DJ!Help with for a list of commands.",
       }
     ],
     timestamp: new Date(),
@@ -291,7 +291,7 @@ client.on('message', msg => {
                 msg.reply('You do not have permission to use this command.'
         )}})}    
     //DJ Help
-    if(msg.content.startsWith('!DJ!help')){
+    if(msg.content.startsWith('!DJ!Help')){
         GuildID.fetchMember(msg.author.id).then (member => {
             member.send({embed: {
     color: 3447003,
@@ -304,59 +304,56 @@ client.on('message', msg => {
     fields: [
         {
         name: "Detailed command help",
-        value: "__**Usage:**!DJ!help with <command>__",
-        value:"Specific help with a certain command"
+        value: "__**Usage:**!DJ!help with <command>__\nSpecific help with a certain command"
         },
         {
         name: "Play",
-        value:"__**Usage:**!DJ!play <url> | <search>__",
-        value: "Play audio from YouTube"
+        value:"__**Usage:**!DJ!play <url> | <search>__\nPlay audio from YouTube"
+        
         },
         {
         name: "Skip",
-        value:"__**Usage:**!DJ!skip [number]__",
-        value: "Skip a song or multi songs with skip [some number]. Only Admins can use this command"
+        value:"__**Usage:**!DJ!skip [number]__\nSkip a song or multi songs with skip [some number]. Only Admins can use this command"
+        
         },
         {
         name: "Queue",
-        value:"__**Usage:**!DJ!queue [index]__",
-        value: "Display the current queue or an item from the queue."
+        value:"__**Usage:**!DJ!queue [index]__\nDisplay the current queue or an item from the queue."
+        
         },
         {
         name: "Pause",
-        value:"__**Usage:**!DJ!pause__",
-        value: "Pause music playback. Only admins can use this command."
+        value:"__**Usage:**!DJ!pause__\nPause music playback. Only admins can use this command."
+        
         },
         {
         name: "Resume",
-        value:"__**Usage:**!DJ!resume__",
-        value: "Resumes music playback. Only admins can use this command."
+        value:"__**Usage:**!DJ!resume__\nResumes music playback. Only admins can use this command"
+        
         },
         {
         name: "Volume",
-        value:"__**Usage:**!DJ!volume <number>__",
-        value: "Adjust the playback volume between 1 and 200. Only admins can use this command."
+        value:"__**Usage:**!DJ!volume <number>__\nAdjust the playback volume between 1 and 200. Only admins can use this command."
+        
         },
         {
         name: "Join",
-        value:"__**Usage:**!DJ!join__",
-        value: "Joins your currently connected channel. Only Admins can use this command."
+        value:"__**Usage:**!DJ!join__\nJoins your currently connected channel. Only Admins can use this command"
+        
         },
         {
         name: "Leave",
-        value:"__**Usage:**!DJ!leave__",
-        value: "Leaves your currently connected channel. Only Admins can use this command."
+        value:"__**Usage:**!DJ!leave__\nLeaves your currently connected channel. Only Admins can use this command."
         },
         {
         name: "Clear Queue",
-        value:"__**Usage:**!DJ!clearqueue__",
-        value: "Clears the song queue. Only Admins can use this command."
+        value:"__**Usage:**!DJ!clearqueue__\nClears the song queue. Only Admins can use this command."
         },
     ],
     timestamp: new Date(),
     footer: {
       icon_url: client.user.avatarURL,
-      text: "The DJ function uses the [discord.js-musicbot-addon](https://www.npmjs.com/package/discord.js-musicbot-addon) made by DarkoPendragon."
+      text: "The DJ function uses the discord.js-musicbot-addon(https://www.npmjs.com/package/discord.js-musicbot-addon) made by DarkoPendragon."
     }
   }
 })})}
