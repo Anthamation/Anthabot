@@ -148,7 +148,8 @@ client.on('message', msg => {
             }
             if(member.roles.has(MemberRole.id)){
     member.send({embed: {
-    Title: "Your commands as a **__Member__**",
+    title: "Your commands as a **__Member__**",
+    description:"My prefix is __!Yo!__",
     color: 3447003,
     author: {
       name: client.user.username,
@@ -156,44 +157,29 @@ client.on('message', msg => {
     },
     fields: [{
         name: "Ping",
-        value:"__**Usage:**__!Yo!ping__",
-      },
-      {
-          value: "Test the ping"
+        value:"__**Usage:**!Yo!ping__\nTest the ping",
       },
       {
         name: "Ask Anthabot(Yes/No)",
-        value:"__**Usage:**!Yo!Anthabot, <Any Yes/No>__",
-      },
-      {
-          value: "Ask the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
+        value:"__**Usage:**!Yo!Anthabot, <Any Yes/No>__\nAsk the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
       },
       {
         name: "Hello",
-        value: "__**Usage:__**!Yo!Hello__", 
-      },
-      {
-          value: "Say hello to the bot!"
+        value: "__**Usage:__**!Yo!Hello__\nSay hello to the bot!", 
       },
       {
         name: "How are you?",
-        value: "__**Usage:**!Yo!How are you?__",
-      },
-      {
-          value: "Ask the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
+        value: "__**Usage:**!Yo!How are you?__\nAsk the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
       },
       {
         name: "DJ",
-        value: "__**Usage:**!DJ!<DJ command>__",
-      },
-      {
-          value: "Enables DJ mode. Use the bot to play music in the VC you are currently in. __For DJ help, use !DJ!help with for a list of commands.__"
-      },
+        value: "__**Usage:**!DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. __For DJ help, use !DJ!help with for a list of commands.__",
+      }
     ],
     timestamp: new Date(),
     footer: {
       icon_url: client.user.avatarURL,
-      text: "This bot was proudly made by Anthony Rees and [FlyingSixtySix](https://github.com/FlyingSixtySix)"
+      text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
     }
   }
 });
@@ -210,25 +196,17 @@ client.on('message', msg => {
     fields: [
         {
           name: "Warn",
-          value: "__**Usage:**!Yo!warn <Mentioned Member>__",
-          
+          value: "__**Usage:**!Yo!warn <Mentioned Member>__\nGive a warning to a member acting up. Max cap is 3 until kicked.",
         },
         {
-          value:"Give a warning to a member acting up. Max cap is 3 until kicked."
-      },
-        {
         name: "Kick",
-        value: "__**Usage:**!Yo!kick <Mentioned Member>__",
-        
-      },
-      {
-          value: "Give that member the boot. __**Use this command with responsibily.**__"
+        value: "__**Usage:**!Yo!kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibily.**__",  
       },
     ],
     timestamp: new Date(),
-    description: {
+    footer: {
       icon_url: client.user.avatarURL,
-      text: "This bot was proudly made by Anthony Rees and [FlyingSixtySix](https://github.com/FlyingSixtySix)"
+      text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
     }
   }
 });
@@ -245,17 +223,13 @@ client.on('message', msg => {
     fields: [
     {
         name: "Ban",
-        value:"__**Usage:**!Yo!ban <Mentioned Member>__",
-        
-    },
-    {
-          value: "Ban this member forever. ***__Use this command with EVEN MORE responsibily.__***"
-      },
+        value:"__**Usage:**!Yo!ban <Mentioned Member>__\nBan this member forever. ***__Use this command with EVEN MORE responsibily.__***",
+    }
     ],
     timestamp: new Date(),
     footer: {
       icon_url: client.user.avatarURL,
-      text: "This bot was proudly made by Anthony Rees and [FlyingSixtySix](https://github.com/FlyingSixtySix)"
+      text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
     }
   }
 });
