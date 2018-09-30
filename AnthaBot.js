@@ -161,19 +161,19 @@ client.on('message', msg => {
       },
       {
         name: "Ask Anthabot(Yes/No)",
-        value:"__**Usage:**!Yo!Anthabot, <Any Yes/No>__\nAsk the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+        value:"__**Usage:** !Yo!Anthabot, <Any Yes/No>__\nAsk the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
       },
       {
         name: "Hello",
-        value: "__**Usage:__**!Yo!Hello__\nSay hello to the bot!", 
+        value: "__**Usage:** !Yo!Hello__\nSay hello to the bot!", 
       },
       {
         name: "How are you?",
-        value: "__**Usage:**!Yo!How are you?__\nAsk the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+        value: "__**Usage:** !Yo!How are you?__\nAsk the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
       },
       {
         name: "DJ",
-        value: "__**Usage:**!DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. For DJ help, use !DJ!Help with for a list of commands.",
+        value: "__**Usage:** !DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. For DJ help, use !DJ!Help with for a list of commands.",
       }
     ],
     timestamp: new Date(),
@@ -196,11 +196,11 @@ client.on('message', msg => {
     fields: [
         {
           name: "Warn",
-          value: "__**Usage:**!Yo!warn <Mentioned Member>__\nGive a warning to a member acting up. Max cap is 3 until kicked.",
+          value: "__**Usage:** !Yo!warn <Mentioned Member>__\nGive a warning to a member acting up. Max cap is 3 until kicked.",
         },
         {
         name: "Kick",
-        value: "__**Usage:**!Yo!kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibily.**__",  
+        value: "__**Usage:** !Yo!kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibily.**__",  
       },
     ],
     timestamp: new Date(),
@@ -223,7 +223,7 @@ client.on('message', msg => {
     fields: [
     {
         name: "Ban",
-        value:"__**Usage:**!Yo!ban <Mentioned Member>__\nBan this member forever. ***__Use this command with EVEN MORE responsibily.__***",
+        value:"__**Usage:** !Yo!ban <Mentioned Member>__\nBan this member forever. ***__Use this command with EVEN MORE responsibily.__***",
     }
     ],
     timestamp: new Date(),
