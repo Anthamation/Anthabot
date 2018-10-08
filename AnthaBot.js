@@ -358,6 +358,9 @@ client.on('message', msg => {
   }
 })})}
     //anthony's commands
+    if(msg.content.startsWith(config.prefix + "emit")){
+
+    }
     //Admin Commands
     //A.Warn
     if(msg.content.startsWith(config.prefix + "Warn")){
@@ -518,7 +521,43 @@ if (msg.content.startsWith(config.prefix + "kick")) {
                     msg.author.send("Incorrect! Please Try Again! Remember, it's only ONE word, NOTHING ELSE. If you include other words, **I will not recognize it.**")
                 }
                 member.addRole(MemberRole)
-                msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
+                msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay!`)
+                msg.author.send({embed: {
+                    title: "Your commands as a **__Member__**",
+                    description:"My prefix is __!Yo!__",
+                    color: 3447003,
+                    author: {
+                      name: client.user.username,
+                      icon_url: client.user.avatarURL
+                    },
+                    fields: [{
+                        name: "Ping",
+                        value:"__**Usage:**!Yo!ping__\nTest the ping",
+                      },
+                      {
+                        name: "Ask Anthabot(Yes/No)",
+                        value:"__**Usage:** !Yo!Anthabot, <Any Yes/No>__\nAsk the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+                      },
+                      {
+                        name: "Hello",
+                        value: "__**Usage:** !Yo!Hello__\nSay hello to the bot!", 
+                      },
+                      {
+                        name: "How are you?",
+                        value: "__**Usage:** !Yo!How are you?__\nAsk the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+                      },
+                      {
+                        name: "DJ",
+                        value: "__**Usage:** !DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. For DJ help, use !DJ!Help with for a list of commands.",
+                      }
+                    ],
+                    timestamp: new Date(),
+                    footer: {
+                      icon_url: client.user.avatarURL,
+                      text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                    }
+                  }})
+
                 .then(() => {
                     let unverified = edb.unverified
         for (let i = 0; i < unverified.length; i++){
@@ -550,7 +589,42 @@ if (msg.content.startsWith(config.prefix + "kick")) {
 
         msg.member.addRole(MemberRole)
         msg.delete()
-        msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay! My suffix is !Yo!, and your commands as a member are: "!Yo!Anthabot, <Any Yes/no question>", "!Yo!Ping" ,"!Yo!Hello!", "!Yo!How Are you?"`)
+        msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay!`)
+        msg.author.send({embed: {
+            title: "Your commands as a **__Member__**",
+            description:"My prefix is __!Yo!__",
+            color: 3447003,
+            author: {
+              name: client.user.username,
+              icon_url: client.user.avatarURL
+            },
+            fields: [{
+                name: "Ping",
+                value:"__**Usage:**!Yo!ping__\nTest the ping",
+              },
+              {
+                name: "Ask Anthabot(Yes/No)",
+                value:"__**Usage:** !Yo!Anthabot, <Any Yes/No>__\nAsk the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+              },
+              {
+                name: "Hello",
+                value: "__**Usage:** !Yo!Hello__\nSay hello to the bot!", 
+              },
+              {
+                name: "How are you?",
+                value: "__**Usage:** !Yo!How are you?__\nAsk the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+              },
+              {
+                name: "DJ",
+                value: "__**Usage:** !DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. For DJ help, use !DJ!Help with for a list of commands.",
+              }
+            ],
+            timestamp: new Date(),
+            footer: {
+              icon_url: client.user.avatarURL,
+              text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+            }
+          }})
         .then(() => {
             let unverified = edb.unverified
         for (let i = 0; i < unverified.length; i++){
