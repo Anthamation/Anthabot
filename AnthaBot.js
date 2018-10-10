@@ -25,15 +25,27 @@ client.on('ready', () => {
     let id = unverified[i].UserID
         var GuildID = client.guilds.get('404304756845051905')
         let time = unverified[i].UserEX
+        let MemberRole = GuildID.roles.get('404333218922233858')
+        GuildID.fetchMember(id).then (member => {
+    if(member.roles.has(MemberRole.id)){
+        edb.unverified = unverified.filter(entry => entry.UserID != id)
+        console.log(`${member.displayName} has the Member role, removing from database.`)
+        fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err => {
+            if(err){
+                console.error(err)
+            }
+        })
+    }
     if(new Date().getTime() >= time){
-            GuildID.fetchMember(id).then (member => {
                 member.kick("You have failed to verify yourself. If you wish to try again, please find another invite.")
                 edb.unverified = unverified.filter(entry => entry.UserID != id)
                 console.log(`${member.displayName} failed to verify. Kicking...`)
                 fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err => {
                     if(err){
                         console.error(err)
-                        }})})}}});
+                    }})
+                }})
+            }});
 
 /*things to work on: Server KickDB, Incorrect counter, Warning counter w/DB, Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
 
