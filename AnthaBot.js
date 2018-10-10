@@ -22,10 +22,11 @@ client.on('ready', () => {
         helpCmd: "helpwith",})
     console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`)
     let unverified = edb.unverified
+    let time = warned[i].countEX
     for (let i = 0; i < unverified.length; i++){
     let id = unverified[i].UserID
         var GuildID = client.guilds.get('404304756845051905')
-        let time = unverified[i].UserEX
+        let Utime = unverified[i].UserEX
         let MemberRole = GuildID.roles.get('404333218922233858')
         GuildID.fetchMember(id).then (member => {
     if(member.roles.has(MemberRole.id)){
@@ -37,7 +38,7 @@ client.on('ready', () => {
             }
         })
     }
-    if(new Date().getTime() >= time){
+    if(new Date().getTime() >= Utime){
                 member.kick("You have failed to verify yourself. If you wish to try again, please find another invite.")
                 edb.unverified = unverified.filter(entry => entry.UserID != id)
                 console.log(`${member.displayName} failed to verify. Kicking...`)
@@ -60,7 +61,7 @@ client.on('guildMemberAdd', member => {
         db.push("/unverified[]", uis);
         db.reload();
     let unverified = edb.unverified 
-    setInterval(function(){
+    setTimeout(function(){
     for (let i = 0; i < unverified.length; i++){
         let id = unverified[i].UserID
         var GuildID = client.guilds.get('404304756845051905')
@@ -494,13 +495,19 @@ if(msg.content.startsWith(config.prefix + "Warn")){
                     jwdb.reload();
                     msg.member.send('Your action have been brought to a moderators attention. A counter strike has been added to a personal record. If you exceed 3 counter strikes, you will be banned from the server for a period of time.')
                     let warned = wdb.warned
-    setInterval(function(){
+    setTimeout(function(){
     for (let i = 0; i < warned.length; i++){
         let id = warned[i].UserID
         var GuildID = client.guilds.get('404304756845051905')
         let time = warned[i].countEX
-
-        if(new Date().getTime() >= time){
+        let amount = warned[i].noo
+        if(amount == 3){
+            GuildID.fetchMember(id).then(() => {
+                member.kick("You have exceeded 3 warnings and you are now banned for 1 month.")
+            })
+        }
+        
+        if(new Date().getTime() >= time || amount == 0){
             GuildID.fetchMember(id).then(() => {
                 member.send("For your good behavour, your warnings have been removed. Great job!")
             })
