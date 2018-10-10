@@ -2,12 +2,13 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const JsonDB = require('node-json-db');
 const db = new JsonDB("edb", true, true);
-const edb = require("./edb.json")
+const edb = require("./edb.json");
+const jwdb = new JsonDB("wdb", true, true);
+const wdb = require("./wdb.json");
 const ytm = require('discord.js-musicbot-addon');
 const config = require("./config.json");
 const YN_list = require("./YN_List.json");
 const hruf_List = require("./HRUF.json");
-const wdb = require("./wdb.json");
 const fs = require('fs');
 
 client.login(config.token)
@@ -468,6 +469,13 @@ if (msg.content.startsWith(config.prefix + "ban")) {
 //M.Warn
 if(msg.content.startsWith(config.prefix + "Warn")){
         const user = msg.mentions.users.first();
+        let CurrentTime = new Date();
+                    let mct = CurrentTime.getTime();
+                    let noo = ++1;
+                    let UserID = member.id;
+                    let monthint = 2592000000;
+                    let countEX = mct + monthint;
+                    var uci = {UserID,noo,countEX};
         GuildID.fetchMember(msg.author.id).then (member => {
             if(!member.roles.has(ModRole.id)){
                 msg.delete()
@@ -482,7 +490,30 @@ if(msg.content.startsWith(config.prefix + "Warn")){
                     msg.author.send("You cannot use this command for the owner.")
                     return
                 }else {
-                    msg.member.send('Your action have been brought to a moderators attention. You have been warned.')
+                    jwdb.push("/warned[]", uci);
+                    jwdb.reload();
+                    msg.member.send('Your action have been brought to a moderators attention. A counter strike has been added to a personal record. If you exceed 3 counter strikes, you will be banned from the server for a period of time.')
+                    let warned = wdb.warned
+    setInterval(function(){
+    for (let i = 0; i < warned.length; i++){
+        let id = warned[i].UserID
+        var GuildID = client.guilds.get('404304756845051905')
+        let time = warned[i].countEX
+
+        if(new Date().getTime() >= time){
+            GuildID.fetchMember(id).then(() => {
+                member.send("For your good behavour, your warnings have been removed. Great job!")
+            })
+            wdb.unverified = warned.filter(entry => entry.UserID != id)
+                    wdb.warned = warned.filter(entry => entry.UserID != id)
+                console.log(`${member.displayName} has now clean. Removing from warning database.`)
+                fs.writeFile('wdb.json', JSON.stringify(wdb, null, 2), err => {
+                    if(err){
+                        console.error(err)
+                        }})
+        }
+    }
+    },30000)
                     console.log(`${msg.author.username} has warned ${member.displayName} on ${CurrentTime}`)
                 }} 
             }
