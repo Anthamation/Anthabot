@@ -471,12 +471,11 @@ if (msg.content.startsWith(config.prefix + "ban")) {
 if(msg.content.startsWith(config.prefix + "Warn")){
         const user = msg.mentions.users.first();
         let CurrentTime = new Date();
-                    let mct = CurrentTime.getTime();
-                    let noo = ++1;
-                    let UserID = member.id;
-                    let monthint = 2592000000;
-                    let countEX = mct + monthint;
-                    var uci = {UserID,noo,countEX};
+        let mct = CurrentTime.getTime();
+        let noo = ++1;        let UserID = user.id;
+        let monthint = 2592000000;
+        let countEX = mct + monthint;
+        var uci = {UserID,noo,countEX};
         GuildID.fetchMember(msg.author.id).then (member => {
             if(!member.roles.has(ModRole.id)){
                 msg.delete()
