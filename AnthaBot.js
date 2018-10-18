@@ -21,8 +21,8 @@ client.on('ready', () => {
         leaveAlt: ["quit"],
         helpCmd: "helpwith",})
     console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`)
+    //Unverified Check
     let unverified = edb.unverified
-    let time = warned[i].countEX
     for (let i = 0; i < unverified.length; i++){
     let id = unverified[i].UserID
         var GuildID = client.guilds.get('404304756845051905')
@@ -47,7 +47,30 @@ client.on('ready', () => {
                         console.error(err)
                     }})
                 }})
-            }});
+            }
+        //Warning Time Check
+        fs.readFile("wdb.json","UTF-8",(error, data)=>{
+            if(error){
+                console.error(error)
+            }
+            var pdata = JSON.parse(data)
+            var warned = pdata.warned;
+            for (var key in warned){
+                if(warned.hasOwnProperty(key)){
+                    let time = warned[key].UserEX;
+                    if(time <= new Date().getTime()){
+                        var ddp = "/warned/ID"
+                    var nddp = ddp.replace('ID',key)
+                    GuildID.fetchMember(key).then (member =>{
+                        member.send("For your good behavior over time, you have been removed from the Warning database.")
+                        console.log(`${member.displayName} has been removed from the Warning Database for Good behavior over time.`)
+                    })
+                    db.delete(nddp)
+                    }
+                }
+            }
+        })
+    });
 
 /*things to work on: Server KickDB, Incorrect counter, Warning counter w/DB, Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
 
@@ -470,12 +493,6 @@ if (msg.content.startsWith(config.prefix + "ban")) {
 //M.Warn
 if(msg.content.startsWith(config.prefix + "Warn")){
         const user = msg.mentions.users.first();
-        let CurrentTime = new Date();
-        let mct = CurrentTime.getTime();
-        let noo = ++1;        let UserID = user.id;
-        let monthint = 2592000000;
-        let countEX = mct + monthint;
-        var uci = {UserID,noo,countEX};
         GuildID.fetchMember(msg.author.id).then (member => {
             if(!member.roles.has(ModRole.id)){
                 msg.delete()
@@ -490,38 +507,67 @@ if(msg.content.startsWith(config.prefix + "Warn")){
                     msg.author.send("You cannot use this command for the owner.")
                     return
                 }else {
-                    jwdb.push("/warned[]", uci);
-                    jwdb.reload();
-                    msg.member.send('Your action have been brought to a moderators attention. A counter strike has been added to a personal record. If you exceed 3 counter strikes, you will be banned from the server for a period of time.')
-                    let warned = wdb.warned
-    setTimeout(function(){
-    for (let i = 0; i < warned.length; i++){
-        let id = warned[i].UserID
-        var GuildID = client.guilds.get('404304756845051905')
-        let time = warned[i].countEX
-        let amount = warned[i].noo
-        if(amount == 3){
-            GuildID.fetchMember(id).then(() => {
-                member.kick("You have exceeded 3 warnings and you are now banned for 1 month.")
-            })
+                   var ext = cms + 20000;
+                    var UserId = {}
+                    var UserEX = {}
+                    var UserCt = {}
+                    UserId = member.id;
+                    var datapath = "/warned/User";
+                    var ndp = datapath.replace('User',UserId)
+                fs.readFile("wdb.json", "UTF-8", (error, data) => {
+                    if(error){
+                        console.error(error)
+                    }
+                    var pdata = JSON.parse(data)
+                    var warned = pdata.warned;
+                    for (var key in warned){
+                         if(warned.hasOwnProperty(key)){
+                let cnt = warned[key].UserCt;
+                let idd = warned[key]
+                let time = warned[key].UserEX
+                if(warned.hasOwnProperty(UserId)){
+                    let cnt = warned[key].UserCt;
+                    let time = warned[key].UserEX;
+                    UserEX = exx + 10000
+                    UserCt = ++cnt
+                    var uis = {UserEX, UserCt}
+                    jwdb.push(ndp, uis)
+                    //console.log('added')
+                }
+                if(!warned.hasOwnProperty(UserId)){
+                    UserCt = 1
+                    var uis = {UserEX, UserCt}
+                    jwdb.push(ndp, uis)
+                    //console.log('new')
+                }
+                if(cnt >= 3){
+                    var ddp = "/warned/ID"
+                    var nddp = ddp.replace('ID',key)
+                    db.delete(nddp)
+                    GuildID.fetchMember(key).then (member => {
+                        member.ban("You have exceeded your 3 warnings and you have been banned from the server.")
+                        console.log(`${member.displayName} has been removed from the Warning Database for Bad behavior.`)
+                    })
+                }
+                if(time <= new Date().getTime()){
+                    var ddp = "/warned/ID"
+                    var nddp = ddp.replace('ID',key)
+                    GuildID.fetchMember(key).then (member =>{
+                        member.send("For your good behavior over time, you have been removed from the Warning database.")
+                        console.log(`${member.displayName} has been removed from the Warning Database for Good behavior over time.`)
+                    })
+                    db.delete(nddp)
+                    console.log()
+                }
+                
+            }
         }
-        
-        if(new Date().getTime() >= time || amount == 0){
-            GuildID.fetchMember(id).then(() => {
-                member.send("For your good behavour, your warnings have been removed. Great job!")
-            })
-            wdb.unverified = warned.filter(entry => entry.UserID != id)
-                    wdb.warned = warned.filter(entry => entry.UserID != id)
-                console.log(`${member.displayName} has now clean. Removing from warning database.`)
-                fs.writeFile('wdb.json', JSON.stringify(wdb, null, 2), err => {
-                    if(err){
-                        console.error(err)
-                        }})
+        if(!warned.hasOwnProperty(key)){
+            UserCt = 1
+            var uis = {UserEX, UserCt}
+            jwdb.push(ndp, uis)
         }
-    }
-    },30000)
-                    console.log(`${msg.author.username} has warned ${member.displayName} on ${CurrentTime}`)
-                }} 
+                })}} 
             }
         }
         })
