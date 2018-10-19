@@ -233,11 +233,11 @@ client.on('message', msg => {
     fields: [
         {
           name: "Warn",
-          value: "__**Usage:** !Yo!warn <Mentioned Member>__\nGive a warning to a member acting up. Max cap is 3 until kicked.",
+          value: "__**Usage:** !Yo!Warn <Mentioned Member>__\nGive a warning to a member acting up. Max cap is 3 until kicked.",
         },
         {
         name: "Kick",
-        value: "__**Usage:** !Yo!kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibily.**__",  
+        value: "__**Usage:** !Yo!Kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibily.**__",  
       },
     ],
     timestamp: new Date(),
@@ -260,7 +260,7 @@ client.on('message', msg => {
     fields: [
     {
         name: "Ban",
-        value:"__**Usage:** !Yo!ban <Mentioned Member>__\nBan this member forever. ***__Use this command with EVEN MORE responsibily.__***",
+        value:"__**Usage:** !Yo!Ban <Mentioned Member>__\nBan this member forever. ***__Use this command with EVEN MORE responsibily.__***",
     }
     ],
     timestamp: new Date(),
