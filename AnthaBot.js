@@ -408,8 +408,9 @@ client.on('message', msg => {
             if(member.roles.has(ModRole.id)) return
         if(member.roles.has(AdminRole.id)){
             if (user) {
+               const member = message.guild.member(user);
                 if (member) {
-                    if (user.id = 262477177449086976){
+                    if (member.id = 262477177449086976){
                     msg.author.send("You cannot use this command for the owner.")
                     return
                 }else {
@@ -438,13 +439,17 @@ client.on('message', msg => {
                     UserCt = ++cnt
                     var uis = {UserEX, UserCt}
                     jwdb.push(ndp, uis)
-                    //console.log('added')
+                    user.send(`__**WARNING!**__/n Your actions have been noted once again by an Admin or Moderator with a total of ${UserCt} warnings and your cooldown timer has been reset to 30 days from now. If you exceed 3 warnings, YOU WILL BE BANNED.`)
+                    msg.author.send(`Successfully warned ${user.tag}`);
+                    console.log(`${msg.author.username} successfully warned ${user.tag}`)
                 }
                 if(!warned.hasOwnProperty(UserId)){
                     UserCt = 1
                     var uis = {UserEX, UserCt}
                     jwdb.push(ndp, uis)
-                    //console.log('new')
+                    user.send(`__**WARNING!**__/n Your actions have been noted by an Admin or Moderator with a total of ${UserCt} warning and your cooldown timer has been set to 30 days from now. To be removed from the warning database If you exceed 3 warnings, YOU WILL BE BANNED.`)
+                    msg.author.send(`Successfully warned ${user.tag}`);
+                    console.log(`${msg.author.username} successfully warned ${user.tag}`)
                 }
                 if(cnt >= 3){
                     var ddp = "/warned/ID"
@@ -471,16 +476,17 @@ client.on('message', msg => {
             UserCt = 1
             var uis = {UserEX, UserCt}
             jwdb.push(ndp, uis)
+            msg.author.send(`Successfully warned ${user.tag}`);
+            console.log(`${msg.author.username} successfully warned ${user.tag}`)
         }
                 })
-                }} 
+            }} 
             }
         }
         })
     }
     //A.kick  
-  if (msg.content.startsWith(config.prefix + "kick")) {
-   
+  if (msg.content.startsWith(config.prefix + "Kick")) {
     const user = msg.mentions.users.first();
     GuildID.fetchMember(msg.author.id).then (member => {
         if(!member.roles.has(AdminRole.id)){
@@ -490,8 +496,9 @@ client.on('message', msg => {
             }
         if(member.roles.has(AdminRole.id)){
         if (user) {
+            const member = message.guild.member(user);
             if (member) {
-                if (user.id = 262477177449086976){
+                if (member = 262477177449086976){
                     msg.author.send("You cannot use this command for the owner.")
                     return
                 }
@@ -499,7 +506,7 @@ client.on('message', msg => {
                 member.kick('Optional reason that will display in the audit logs').then(() => {
                 console.log(`${msg.author.username} has kicked ${member.displayName} on ${CurrentTime}`);
             }).catch(err => {
-          msg.reply('I was unable to kick the member');
+          msg.member.send('I was unable to kick the member');
           console.error(err);
         });
       }}
@@ -513,7 +520,7 @@ client.on('message', msg => {
 })
 }
     //A.Ban    
-if (msg.content.startsWith(config.prefix + "ban")) {
+if (msg.content.startsWith(config.prefix + "Ban")) {
     const user = msg.mentions.users.first();
     GuildID.fetchMember(msg.author.id).then (member => {
         if(!member.roles.has(AdminRole.id)){
@@ -523,8 +530,9 @@ if (msg.content.startsWith(config.prefix + "ban")) {
             }
         if(member.roles.has(AdminRole.id)){
         if (user) {
+            const member = message.guild.member(user);
             if (member) {
-                if (user.id = 262477177449086976){
+                if (member.id = 262477177449086976){
                     msg.author.send("You cannot use this command for the owner.")
                     return
                 }
@@ -532,7 +540,7 @@ if (msg.content.startsWith(config.prefix + "ban")) {
                 member.ban('Optional reason that will display in the audit logs').then(() => {
                 console.log(`${msg.author.username} has banned ${member.displayName} on ${CurrentTime}`);
             }).catch(err => {
-          console.log('I was unable to kick the member');
+          msg.member.send('I was unable to ban the member');
           console.error(err);
         });
       }} else {
@@ -551,14 +559,15 @@ if(msg.content.startsWith(config.prefix + "Warn")){
         GuildID.fetchMember(msg.author.id).then (member => {
             if(!member.roles.has(ModRole.id)){
                 msg.delete()
-                msg.member.send('You do not have permission to use this command.')
+                msg.author.send('You do not have permission to use this command.')
                 return
             }
             if(member.roles.has(AdminRole.id)) return
         if(member.roles.has(ModRole.id)){
             if (user) {
+                const member = message.guild.member(user);
                 if (member) {
-                    if (user.id = 262477177449086976){
+                    if (member.id = 262477177449086976){
                     msg.author.send("You cannot use this command for the owner.")
                     return
                 }else {
@@ -587,7 +596,7 @@ if(msg.content.startsWith(config.prefix + "Warn")){
                     UserCt = ++cnt
                     var uis = {UserEX, UserCt}
                     jwdb.push(ndp, uis)
-                    //console.log('added')
+                    console.log(`${msg.author.username} successfully warned ${user.tag}`)
                 }
                 if(!warned.hasOwnProperty(UserId)){
                     UserCt = 1
@@ -627,7 +636,7 @@ if(msg.content.startsWith(config.prefix + "Warn")){
         })
     }
 //M.kick
-if (msg.content.startsWith(config.prefix + "kick")) {
+if (msg.content.startsWith(config.prefix + "Kick")) {
    
     const user = msg.mentions.users.first();
     GuildID.fetchMember(msg.author.id).then (member => {
@@ -638,6 +647,7 @@ if (msg.content.startsWith(config.prefix + "kick")) {
             }
         if(member.roles.has(ModRole.id)){
         if (user) {
+            const member = message.guild.member(user);
             if (member) {
                 if (user.id = 262477177449086976){
                     msg.author.send("You cannot use this command for the owner.")
