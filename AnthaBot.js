@@ -395,9 +395,6 @@ client.on('message', msg => {
   }
 })})}
     //anthony's commands
-    if(msg.content.startsWith(config.prefix + "emit")){
-
-    }
     //Admin Commands
     //A.Warn
     if(msg.content.startsWith(config.prefix + "Warn")){
@@ -416,8 +413,66 @@ client.on('message', msg => {
                     msg.author.send("You cannot use this command for the owner.")
                     return
                 }else {
-                    msg.member.send('Your action have been brought to an Admins attention. You have been warned.')
-                    console.log(`${msg.author.username} has warned ${member.displayName} on ${CurrentTime}`)
+                    var ext = cms + 20000;
+                    var UserId = {}
+                    var UserEX = {}
+                    var UserCt = {}
+                    UserId = member.id;
+                    var datapath = "/warned/User";
+                    var ndp = datapath.replace('User',UserId)
+                fs.readFile("wdb.json", "UTF-8", (error, data) => {
+                    if(error){
+                        console.error(error)
+                    }
+                    var pdata = JSON.parse(data)
+                    var warned = pdata.warned;
+                    for (var key in warned){
+                         if(warned.hasOwnProperty(key)){
+                let cnt = warned[key].UserCt;
+                let idd = warned[key]
+                let time = warned[key].UserEX
+                if(warned.hasOwnProperty(UserId)){
+                    let cnt = warned[key].UserCt;
+                    let time = warned[key].UserEX;
+                    UserEX = exx + 10000
+                    UserCt = ++cnt
+                    var uis = {UserEX, UserCt}
+                    jwdb.push(ndp, uis)
+                    //console.log('added')
+                }
+                if(!warned.hasOwnProperty(UserId)){
+                    UserCt = 1
+                    var uis = {UserEX, UserCt}
+                    jwdb.push(ndp, uis)
+                    //console.log('new')
+                }
+                if(cnt >= 3){
+                    var ddp = "/warned/ID"
+                    var nddp = ddp.replace('ID',key)
+                    db.delete(nddp)
+                    GuildID.fetchMember(key).then (member => {
+                        member.ban("You have exceeded your 3 warnings and you have been banned from the server.")
+                        console.log(`${member.displayName} has been removed from the Warning Database for Bad behavior.`)
+                    })
+                }
+                if(time <= new Date().getTime()){
+                    var ddp = "/warned/ID"
+                    var nddp = ddp.replace('ID',key)
+                    GuildID.fetchMember(key).then (member =>{
+                        member.send("For your good behavior over time, you have been removed from the Warning database.")
+                        console.log(`${member.displayName} has been removed from the Warning Database for Good behavior over time.`)
+                    })
+                    db.delete(nddp)
+                }
+                
+            }
+        }
+        if(!warned.hasOwnProperty(key)){
+            UserCt = 1
+            var uis = {UserEX, UserCt}
+            jwdb.push(ndp, uis)
+        }
+                })
                 }} 
             }
         }
@@ -557,7 +612,6 @@ if(msg.content.startsWith(config.prefix + "Warn")){
                         console.log(`${member.displayName} has been removed from the Warning Database for Good behavior over time.`)
                     })
                     db.delete(nddp)
-                    console.log()
                 }
                 
             }
