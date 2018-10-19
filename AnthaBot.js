@@ -72,7 +72,7 @@ client.on('ready', () => {
         })
     });
 
-/*things to work on: Server KickDB, Incorrect counter, Warning counter w/DB, Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
+/*things to work on: Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
 
 client.on('guildMemberAdd', member => {
     var CurrentTime = new Date();
@@ -439,7 +439,7 @@ client.on('message', msg => {
                     UserCt = ++cnt
                     var uis = {UserEX, UserCt}
                     jwdb.push(ndp, uis)
-                    user.send(`__**WARNING!**__/n Your actions have been noted once again by an Admin or Moderator with a total of ${UserCt} warnings and your cooldown timer has been reset to 30 days from now. If you exceed 3 warnings, YOU WILL BE BANNED.`)
+                    user.send(`__**WARNING!**__/n Your actions have been noted once again by an Admin or Moderator with a total of ${UserCt} warnings and your cooldown timer has been reset to 30 days from now./n__**REMINDER!**__/nIf you exceed 3 warnings, YOU WILL BE BANNED.`)
                     msg.author.send(`Successfully warned ${user.tag}`);
                     console.log(`${msg.author.username} successfully warned ${user.tag}`)
                 }
@@ -447,7 +447,7 @@ client.on('message', msg => {
                     UserCt = 1
                     var uis = {UserEX, UserCt}
                     jwdb.push(ndp, uis)
-                    user.send(`__**WARNING!**__/n Your actions have been noted by an Admin or Moderator with a total of ${UserCt} warning and your cooldown timer has been set to 30 days from now. To be removed from the warning database If you exceed 3 warnings, YOU WILL BE BANNED.`)
+                    user.send(`__**WARNING!**__/n Your actions have been noted by an Admin or Moderator with a total of ${UserCt} warning and your cooldown timer has been set to 30 days from now. To be removed from the warning database, do not break any more rules and your cooldown timer will expire, automatically removing you from the database. However, breaking rules before the cooldown timer expires will only reset the timer and add another warning to the database. If you exceed 3 warnings, YOU WILL BE BANNED.`)
                     msg.author.send(`Successfully warned ${user.tag}`);
                     console.log(`${msg.author.username} successfully warned ${user.tag}`)
                 }
@@ -567,7 +567,7 @@ if(msg.content.startsWith(config.prefix + "Warn")){
             if (user) {
                 const member = message.guild.member(user);
                 if (member) {
-                    if (member.id = 262477177449086976){
+                    if (member.id = '262477177449086976'){
                     msg.author.send("You cannot use this command for the owner.")
                     return
                 }else {
@@ -596,13 +596,17 @@ if(msg.content.startsWith(config.prefix + "Warn")){
                     UserCt = ++cnt
                     var uis = {UserEX, UserCt}
                     jwdb.push(ndp, uis)
+                    user.send(`__**WARNING!**__/n Your actions have been noted once again by an Admin or Moderator with a total of ${UserCt} warnings and your cooldown timer has been reset to 30 days from now./n__**REMINDER!**__/nIf you exceed 3 warnings, YOU WILL BE BANNED.`)
+                    msg.author.send(`Successfully warned ${user.tag}`);
                     console.log(`${msg.author.username} successfully warned ${user.tag}`)
                 }
                 if(!warned.hasOwnProperty(UserId)){
                     UserCt = 1
                     var uis = {UserEX, UserCt}
                     jwdb.push(ndp, uis)
-                    //console.log('new')
+                    user.send(`__**WARNING!**__/n Your actions have been noted by an Admin or Moderator with a total of ${UserCt} warning and your cooldown timer has been set to 30 days from now. To be removed from the warning database, do not break any more rules and your cooldown timer will expire, automatically removing you from the database. However, breaking rules before the cooldown timer expires will only reset the timer and add another warning to the database. If you exceed 3 warnings, YOU WILL BE BANNED.`)
+                    msg.author.send(`Successfully warned ${user.tag}`);
+                    console.log(`${msg.author.username} successfully warned ${user.tag}`)
                 }
                 if(cnt >= 3){
                     var ddp = "/warned/ID"
