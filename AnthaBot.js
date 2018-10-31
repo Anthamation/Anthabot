@@ -677,19 +677,27 @@ client.on('message', msg => {
     if (msg.content.toLowerCase() == 'agree' && msg.channel.type === 'dm') {
 
         GuildID.fetchMember(msg.author.id).then(member => {
+            console.log(`${member} has been logged.`)
             if (member.roles.has(MemberRole.id)) return
             if (!member.roles.has(MemberRole.id)) {
+                console.log(`${member} does not have member role`)
                 if (!msg.content.includes() == 'agree') {
                     msg.author.send("Incorrect! Please Try Again! Remember, it's only ONE word, NOTHING ELSE. If you include other words, **I will not recognize it.**")
                 }
                 let unverified = edb.unverified
             for (let i = 0; i < unverified.length; i++) {
+                
                 let id = unverified[i].UserID
+                console.log(`looped ${id}`)
                 GuildID.fetchMember(id).then(member => {
+                    console.log(`${member} is fetched.`)
                     edb.unverified = unverified.filter(entry => member.id != id)
                     fs.writeFile('edb.json', JSON.stringify(edb, null, 2), err => {
                         if (err) {
                             console.error(err)
+                        }
+                        else{
+                            console.log("Filtered!")
                         }
                     })
                 })
