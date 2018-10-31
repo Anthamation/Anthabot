@@ -75,7 +75,7 @@ client.on('ready', () => {
     })
 });
 
-/*things to work on: Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
+/*things to work on: Reconstruct command system, Imagery, announcement, Fix disconnect on leaveDJ, Removing from EDB when agree, Warn system.*/
 
 client.on('guildMemberAdd', member => {
     var CurrentTime = new Date();
