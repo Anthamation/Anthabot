@@ -21,7 +21,7 @@ client.on('ready', () => {
         leaveAlt: ["quit"],
         helpCmd: "helpwith",
     })
-    console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands`)
+    console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands. WARNING: THIS VERSION OF ANTHABOT IS EXPIREMENTAL BUILT FOR THE SOLE PURPOSE OF TESTING AND HAS NOT BEEN CUSTOMIZED TO THE INTENTIONAL SETTINGS.`)
     //Unverified Check
     let unverified = edb.unverified
     for (let i = 0; i < unverified.length; i++) {
