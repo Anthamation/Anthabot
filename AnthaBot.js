@@ -21,7 +21,7 @@ client.on('ready', () => {
         leaveAlt: ["quit"],
         helpCmd: "helpwith",
     })
-    console.log(`Anthabot 1.1.0 EX successfully connected. Awaiting Commands. WARNING: THIS VERSION OF ANTHABOT IS EXPIREMENTAL AND IS BUILT FOR THE SOLE PURPOSE OF TESTING AND HAS NOT BEEN CUSTOMIZED TO THE INTENTIONAL SETTINGS.`)
+    console.log(`Anthabot 1.1.0 STABLE successfully connected. Awaiting Commands.`)
     var unverifiedCheck = setInterval(uvcTimer, 1000)
     function uvcTimer(){
         fs.readFile("edb.json", "UTF-8", (error, data) => {
@@ -98,20 +98,20 @@ client.on('ready', () => {
   
 });
 
-/*things to work on: Imagery, announcement, Fix disconnect on leaveDJ, fix Help(EXT READY).*/
+/*things to work on: Imagery, announcement*/
 
 client.on('guildMemberAdd', member => {
     //unverified
     var CurrentTime = new Date();
     var cms = CurrentTime.getTime();
     var UserID = member.id;
-    var UserEX = cms + 30000;
+    var UserEX = cms + 2592000000;
     var uis = { UserEX };
     var datapath = "/unverified/User";
     var ndp = datapath.replace('User', UserID)
     db.push(ndp, uis);
     db.reload();
-    member.send(`Welcome to the Server, ${member.displayName}! I'm Antha-Bot, nice to meet you! Before we can get down to business, you need to verify yourself by reading the rules and find the magic keyword that grants you member access! When you find the keyword, you can enter it in the #rules-and-Access channel OR reply here, and you will be granted access automatically! Do it quick! You have 3 days until you are kicked from the server! **It's only one word with NO QUOTATIONS.** Need help? My bot suffix is "!Yo!"`);
+    member.send(`Welcome to the Server, ${member.displayName}!\nI'm Antha-Bot, nice to meet you!\nBefore we can get down to business, you need to verify yourself by reading the rules and find the magic keyword that grants you member access!\nWhen you find the keyword, you can enter it in the #rules-and-Access channel OR reply here, and you will be granted access automatically!\nDo it quick! You have 3 days until you are kicked from the server!\n**It's only one word with NO QUOTATIONS.**"`);
     console.log(`${member.displayName} has joined the server at ${member.joinedAt}`)
 });
 
@@ -452,7 +452,7 @@ client.on('message', msg => {
         }
         if(msg.member.roles.has(ModRole.id || AdminRole.id)){
             var cms = CurrentTime.getTime();
-            var ext = cms + 20000;
+            var ext = cms + 2592000000;
             var UserId = {}
             var UserEX = {}
             var UserCt = {}
@@ -473,7 +473,7 @@ client.on('message', msg => {
                         if (warned.hasOwnProperty(UserId)) {
                             let cnt = warned[key].UserCt;
                             let time = warned[key].UserEX;
-                            UserEX = ext + 10000
+                            UserEX = ext + 2592000000
                             UserCt = ++cnt
                             var uis = { UserEX, UserCt }
                             jwdb.push(ndp, uis)
@@ -585,7 +585,7 @@ client.on('message', msg => {
         
         if ((msg.member.roles.has(ModRole.id))&&(!msg.member.roles.has(AdminRole.id))){
             var cms = CurrentTime.getTime();
-            var ext = cms + 20000;
+            var ext = cms + 2592000000;
             var UserId = {}
             var UserEX = {}
             var UserCt = {}
@@ -606,7 +606,7 @@ client.on('message', msg => {
                         if (warned.hasOwnProperty(UserId)) {
                             let cnt = warned[key].UserCt;
                             let time = warned[key].UserEX;
-                            UserEX = ext + 10000
+                            UserEX = ext + 2592000000
                             UserCt = ++cnt
                             var uis = { UserEX, UserCt }
                             jwdb.push(ndp, uis)
