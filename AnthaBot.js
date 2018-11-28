@@ -4,13 +4,13 @@ const JsonDB = require('node-json-db');
 const db = new JsonDB("edb", true, true);
 const edb = require("./edb.json");
 const jwdb = new JsonDB("wdb", true, true);
+const bddb = require("./bddb.json")
+const jbddb = new JsonDB("/bddb", true, true);
 const wdb = require("./wdb.json");
 const ytm = require('discord.js-musicbot-addon');
 const config = require("./config.json");
 const YN_list = require("./YN_List.json");
 const hruf_List = require("./HRUF.json");
-const bddb = require("./bddb.json")
-const jbddb = new JsonDB("/bddb", true, true);
 const fs = require('fs');
 
 client.login(config.token)
@@ -23,7 +23,7 @@ client.on('ready', () => {
         leaveAlt: ["quit"],
         helpCmd: "helpwith",
     })
-    console.log(`Anthabot 1.1.0 STABLE successfully connected. Awaiting Commands.`)
+    console.log(`Anthabot 1.1.1 EX successfully connected. Awaiting Commands.`)
     //unverifiedCheck
     var unverifiedCheck = setInterval(uvcTimer, 1000)
     function uvcTimer(){
