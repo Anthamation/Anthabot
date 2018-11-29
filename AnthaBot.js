@@ -286,6 +286,14 @@ client.on('message', msg => {
             console.log(`${member.displayName} has used the Hello! command on ${CurrentTime}`)
         })
     }
+    //are you a bitch function by Cameron K.
+    if (msg.content.startsWith(config.prefix + "Are you a bitch?")){
+        var GuildID = client.guilds.get('404304756845051905')
+        GuildID.fetchMember(msg.author.id).then(member => {
+            msg.reply("404 Witty_response.json not found")
+            console.log(`${member.displayName} has used the "Are you a bitch" command on ${CurrentTime}`)
+        })
+    }
     //how are you function
     if (msg.content.startsWith(config.prefix + 'How are you?')) {
         var GuildID = client.guilds.get('404304756845051905')
