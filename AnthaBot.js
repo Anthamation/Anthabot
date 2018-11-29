@@ -5,13 +5,14 @@ const db = new JsonDB("edb", true, true);
 const edb = require("./edb.json");
 const jwdb = new JsonDB("wdb", true, true);
 const bddb = require("./bddb.json")
-const jbddb = new JsonDB("/bddb", true, true);
+const jbddb = new JsonDB("bddb", true, true);
 const wdb = require("./wdb.json");
 const ytm = require('discord.js-musicbot-addon');
 const config = require("./config.json");
 const YN_list = require("./YN_List.json");
 const hruf_List = require("./HRUF.json");
 const fs = require('fs');
+
 
 client.login(config.token)
 
@@ -23,7 +24,7 @@ client.on('ready', () => {
         leaveAlt: ["quit"],
         helpCmd: "helpwith",
     })
-    console.log(`Anthabot 1.1.1 EX successfully connected. Awaiting Commands.`)
+    console.log(`Anthabot 1.1.1 STABLE successfully connected. Awaiting Commands.`)
     //unverifiedCheck
     var unverifiedCheck = setInterval(uvcTimer, 1000)
     function uvcTimer(){
@@ -101,7 +102,7 @@ client.on('ready', () => {
     //Birthday Check
     var BirthdayCheck = setInterval(bdtimer,86400000)
     function bdtimer(){
-        fs.readFile("bddb", "UTF-8", (error, data) => {
+        fs.readFile("bddb.json", "UTF-8", (error, data) => {
             if (error) {
                 console.error(error)
             }
@@ -113,15 +114,23 @@ client.on('ready', () => {
                     let currentDay = new Date().getDay();
                     let birthmonth = Birthdays[key].formattedMonth;
                     let birthDAY = Birthdays[key].day;
-
                     if((birthmonth = currentMonth) && (birthDAY = currentDay)){
                         var GuildID = client.guilds.get('404304756845051905')
                         var announceChannelID = client.channels.get('405739200176979968')
                         GuildID.fetchMember(key).then(member => {
-                            member.send("Happy Birthday from Anthony, Anthabot, and the members of Anthony's Server of Servitude! Have a good one!")
-                            announceChannelID.send(`@everyone Today is ${member.displayName}'s birthday! Please wish them a happy birthday!`)
+                            member.send(`Happy Birthday, ${member.displayName}!-From Anthony, Anthabot, and the members of Anthony's Server of Servitude, we hope you have a good one!`, {
+                                file: "https://media.giphy.com/media/37bUqIiNCTt28/giphy.gif"
+                            })
+                            //announceChannelID.send(`@everyone Today is ${member.displayName}'s birthday! Please wish them a happy birthday!`)
+                            announceChannelID.send(`@everyone Today is ${member.displayName}'s birthday! Please wish them a happy birthday!`, {
+                                file: "https://media.giphy.com/media/37bUqIiNCTt28/giphy.gif"
+                            })
+                            
                         })
                     }
+                }
+                if(!Birthdays.hasOwnProperty(key)){
+                    return
                 }
             }
         })
@@ -286,26 +295,26 @@ client.on('message', msg => {
         })
     }
     //birthday function
-
     if(msg.content.startsWith(config.prefix + 'BDAY')){
-        const args = msg.content.slice(config.prefix.length).trim().split("/"+/ +/g);
+        
+        const args = msg.content.slice(config.prefix.length).slice("BDAY".length).trim().split("/");
         var name = msg.author.tag
         var id = msg.author.id
-        let month = args[0];
-        let day = args[1];
+        let month = Number(args[0]);
+        let day = Number(args[1]);
         var UserTag = {};
         var bmonth = {};
         var bday = {};
-        if(!typeof (month||day) === 'number'){
+        if(isNaN(month || day)){
             msg.delete();
-            msg.author.send("The format entered is not readable. The correct format is <Month Number 1-12>/<Day Number 1-31>")
+            msg.author.send("The format entered is not readable. The correct format is ``<Month Number 1-12>/<Day Number 1-31>``")
             console.log(`BDAY:${msg.author.tag} entered an incorrect format. (Error A)`)
             return
         }
-        if(typeof month == 'number'){
+        if(!isNaN(month || day)){
             if(month.length || day.length > 2){
                 msg.delete();
-                msg.author.send("The format entered is not readable. The correct format is <Month Number 1-12>/<Day Number 1-31>")
+                msg.author.send("The format entered is not readable. The correct format is ``<Month Number 1-12>/<Day Number 1-31>``")
                 console.log(`BDAY:${msg.author.tag} entered an incorrect format. (Error B)`)
                 return
             }
@@ -329,6 +338,7 @@ client.on('message', msg => {
                         }
                         var rdata = JSON.parse(data)
                         var Birthdays = rdata.Birthdays;
+                        
                         for (var key in Birthdays){
                             if (Birthdays.hasOwnProperty(key)){
                                 let tag = Birthdays[key].UserTag;
@@ -340,30 +350,22 @@ client.on('message', msg => {
                                     UserTag = name;
                                     bmonth = month;
                                     bday = day;
+                                    let formattedMonth = month - 1
+                                    var datapath = "/Birthdays/User"
+                                    var ndp = datapath.replace('User', id)
                                     let bdayData = {name, formattedMonth, day}
                                     jbddb.push(ndp,bdayData)
                                     jbddb.reload();
                                     msg.delete();
                                     msg.author.send(`Birthday updated! Birthday set on ${month}/${day}!`)
-                                    console.log(`BDAY:${msg.author.tag} has confirmed their birthday for ${month}/${day}`)
+                                    console.log(`BDAY:${msg.author.tag} has updated their birthday for ${month}/${day}`)
                                 }
                                 if(!Birthdays.hasOwnProperty(id)){
                                     let formattedMonth = month - 1
                                     let bdayData = {name, formattedMonth, day}
                                     var datapath = "/Birthdays/User";
                                     var ndp = datapath.replace('User', id)
-                                    jbddb.push(ndp,bdayData);
-                                    jbddb.reload();
-                                    msg.delete();
-                                    msg.author.send(`Birthday confirmed! Birthday set on ${month}/${day}!`)
-                                    console.log(`BDAY:${msg.author.tag} has confirmed their birthday for ${month}/${day}`)
-                                }
-                                if(!Birthdays.hasOwnProperty(key)){
-                                    let formattedMonth = month - 1
-                                    let bdayData = {name, formattedMonth, day}
-                                    var datapath = "/Birthdays/User";
-                                    var ndp = datapath.replace('User', id)
-                                    jbddb.push(ndp,bdayData);
+                                    jbddb.push(ndp, bdayData);
                                     jbddb.reload();
                                     msg.delete();
                                     msg.author.send(`Birthday confirmed! Birthday set on ${month}/${day}!`)
@@ -371,16 +373,19 @@ client.on('message', msg => {
                                 }
                             }
                         }
+                        if(!Birthdays.hasOwnProperty(key)){
+                            let formattedMonth = month - 1
+                            let bdayData = {name, formattedMonth, day}
+                            var datapath = "/Birthdays/User";
+                            var ndp = datapath.replace('User', id)
+                            jbddb.push(ndp,bdayData);
+                            jbddb.reload();
+                            msg.delete();
+                            msg.author.send(`Birthday confirmed! Birthday set on ${month}/${day}!`)
+                            console.log(`BDAY:${msg.author.tag} has confirmed their birthday for ${month}/${day}`)
+                        }
                     })
-                    let formattedMonth = month - 1
-                    let bdayData = {name, formattedMonth, day}
-                    var datapath = "/Birthdays/User";
-                    var ndp = datapath.replace('User', id)
-                    jbddb.push(ndp,bdayData);
-                    jbddb.reload();
-                    msg.delete();
-                    msg.author.send(`Birthday confirmed! Birthday set on ${month}/${day}!`)
-                    console.log(`BDAY:${msg.author.tag} has confirmed their birthday for ${month}/${day}`)
+
                 }
             }
             
@@ -422,7 +427,7 @@ client.on('message', msg => {
                         },
                         {
                             name: "Birthday",
-                            value: "__**Usage:** !Yo!Birthday <Input your month number: 1-12>/<Input your day number: 1-31>__\nTell the bot when your birthday is and have it announced. /n**WARNING!**: Make sure the info you input is correct the first time, as there is no way to change later."
+                            value: "__**Usage:** !Yo!Birthday <Input your month number: 1-12>/<Input your day number: 1-31>__\nTell the bot when your birthday is and have it announced."
                         },
                         {
                             name: "DJ",
