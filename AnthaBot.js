@@ -137,7 +137,7 @@ client.on('ready', () => {
   } 
 });
 
-/*things to work on: Imagery, announcement*/
+/*things to work on: Imagery, announcement, rewrite commands with args and requirement of member status*/
 
 client.on('guildMemberAdd', member => {
     //unverified
@@ -243,8 +243,11 @@ client.on('message', msg => {
     var generalChannel = client.channels.get('404304757558345739')
     //Below is the prevention of Botception.
     if (msg.author.bot) return
-
-    //Link obliterator
+    //Check if the user has at least Member role.
+    if (msg){
+        GuildID.fetchMember(msg.author.id).then(member => {
+            if(member.roles.has(MemberRole)){
+                //Link obliterator
     if (msg.content.includes("https://discord.gg/")) {
         msg.delete()
         msg.member.send('You are reminded that outside Discord server links are not permitted in the server.')
@@ -400,111 +403,7 @@ client.on('message', msg => {
             
         }
     }
-    //help function
-    if (msg.content.startsWith(config.prefix + 'Help')) {
-        var GuildID = client.guilds.get('404304756845051905')
-        GuildID.fetchMember(msg.author.id).then(member => {
-            if (!member.roles.has(MemberRole.id)) {
-                member.send("You have not been verified yet, so there are no commands available for you.")
-            }
-            if (member.roles.has(MemberRole.id)) {
-                member.send({
-                    embed: {
-                        title: "Your commands as a **__Member__**",
-                        description: "My prefix is __!Yo!__",
-                        color: 3447003,
-                        author: {
-                            name: client.user.username,
-                            icon_url: client.user.avatarURL
-                        },
-                        fields: [{
-                            name: "Ping",
-                            value: "__**Usage:**!Yo!ping__\nTest the ping",
-                        },
-                        {
-                            name: "Ask Anthabot(Yes/No)",
-                            value: "__**Usage:** !Yo!Anthabot, <Any Yes/No>__\nAsk the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
-                        },
-                        {
-                            name: "Hello",
-                            value: "__**Usage:** !Yo!Hello__\nSay hello to the bot!",
-                        },
-                        {
-                            name: "How are you?",
-                            value: "__**Usage:** !Yo!How are you?__\nAsk the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
-                        },
-                        {
-                            name: "Birthday",
-                            value: "__**Usage:** !Yo!Birthday <Input your month number: 1-12>/<Input your day number: 1-31>__\nTell the bot when your birthday is and have it announced."
-                        },
-                        {
-                            name: "DJ",
-                            value: "__**Usage:** !DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. For DJ help, use !DJ!Help with for a list of commands.",
-                        }
-                        ],
-                        timestamp: new Date(),
-                        footer: {
-                            icon_url: client.user.avatarURL,
-                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
-                        }
-                    }
-                });
-            }
-            if (member.roles.has(ModRole.id)) {
-                member.send({
-                    embed: {
-                        color: 3447003,
-                        author: {
-                            name: client.user.username,
-                            icon_url: client.user.avatarURL
-                        },
-                        title: "Your commands as a **__Moderator__**",
-                        description: "My prefix is __!Yo!__",
-                        fields: [
-                            {
-                                name: "Warn",
-                                value: "__**Usage:** !Yo!Warn <Mentioned Member>__\nGive a warning to a member acting up. Max cap is 3 until kicked.",
-                            },
-                            {
-                                name: "Kick",
-                                value: "__**Usage:** !Yo!Kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibily.**__",
-                            },
-                        ],
-                        timestamp: new Date(),
-                        footer: {
-                            icon_url: client.user.avatarURL,
-                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
-                        }
-                    }
-                });
-            }
-            if (member.roles.has(AdminRole.id)) {
-                member.send({
-                    embed: {
-                        color: 3447003,
-                        author: {
-                            name: client.user.username,
-                            icon_url: client.user.avatarURL
-                        },
-                        title: "Your commands as an **__Admin__**",
-                        description: "My prefix is __!Yo!__",
-                        fields: [
-                            {
-                                name: "Ban",
-                                value: "__**Usage:** !Yo!Ban <Mentioned Member>__\nBan this member forever. ***__Use this command with EVEN MORE responsibily.__***",
-                            }
-                        ],
-                        timestamp: new Date(),
-                        footer: {
-                            icon_url: client.user.avatarURL,
-                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
-                        }
-                    }
-                });
-            }
-        })
-    }
-    //DJ function/controls
+     //DJ function/controls
     if (msg.content.startsWith('!DJ!skip')) {
         GuildID.fetchMember(msg.author.id).then(member => {
             if (member.roles.has(AdminRole.id)) return
@@ -646,7 +545,254 @@ client.on('message', msg => {
             })
         })
     }
+            }
+            if(!member.roles.has(MemberRole)){
+                msg.author.send()
+                return
+            }
+        })
+    }
+    if (msg.content.startsWith(config.prefix + "Me")){
+        GuildID.fetchMember(msg.author.id).then(member => {
+        fs.readFile("bddb", "UTF-8", (error, data) => {
+            if (error) {
+                console.error(error)
+            }
+            var bdata = JSON.parse(data)
+            var Birthdays = bdata.Birthdays;
+            for (var key in Birthdays){
+                if(Birthdays.hasOwnProperty(key)){
+                    let birthmonth = Birthdays[key].formattedMonth;
+                    let birthDAY = Birthdays[key].day;
+                    if(Birthdays.hasOwnProperty(member.id)){
+                        let reformattedmonth = Number(birthmonth) + 1;
+                        let infostr = "month/day"
+                        let BDAYstr = infostr.replace("month",reformattedmonth).replace("day",birthDAY)
+                    }
+                    if(!Birthdays.hasOwnProperty(member.id)){
+                        let BDAYstr = "No Data"
+                    }
+                }
+                if(!Birthdays.hasOwnProperty(key)){
+                    let BDAYstr = "No Data"
+                }
+            }
+        })
+        fs.readFile("wdb.json", "UTF-8", (error, data) => {
+            if (error) {
+                console.error(error)
+            }
+            var pdata = JSON.parse(data)
+            var warned = pdata.warned;
+            for (var key in warned) {
+                if (warned.hasOwnProperty(key)) {
+                    let time = warned[key].UserEX;
+                    let count = warned[key].UserCt;
+                    if (warned.hasOwnProperty(member.id)) {
+                        let infostr = "0"
+                        var countstr = infostr.replace("0",count)
+                    }
+                }
+                if (!warned.hasOwnProperty(key)){
+                    let countstr = "0"
+                }
+            }
+        })
+    
+  
+            member.send({
+  embed: {
+    thumbnail: {
+      url: msg.author.avatarURL
+    },
+    title: msg.author.tag,
+    color: 4886754,
+    author: {
+      name: "Anthony's Server of Servitude ID CARD"
+    },
+    fields: [
+      {
+        name: "USER ID",
+        value: "```" + msg.member.id + "```",
+        inline: true
+      },
+      {
+        name: "JOINED ON",
+        value: "```" + msg.member.joinedTimestamp + "```",
+        inline: true
+      },
+      {
+        name: "RANK",
+        value: "```" + msg.member.highestRole + "```"
+      },
+      {
+          name: "BIRTHDAY",
+          value: "```" + BDAYstr + "```",
+          inline: true
+      },
+      {
+          name: "WARNING COUNT",
+          value: "```" + countstr
+      }
+    ]
+  }
+})
+        })
+    }
+    //help function
+    if (msg.content.startsWith(config.prefix + 'Help')) {
+        var GuildID = client.guilds.get('404304756845051905')
+        GuildID.fetchMember(msg.author.id).then(member => {
+            if (!member.roles.has(MemberRole.id)) {
+                member.send("You have not been verified yet, so there are no commands available for you.")
+            }
+            if (member.roles.has(MemberRole.id)) {
+                member.send({
+                    embed: {
+                        title: "Your commands as a **__Member__**",
+                        description: "My prefix is __!Yo!__",
+                        color: 3447003,
+                        author: {
+                            name: client.user.username,
+                            icon_url: client.user.avatarURL
+                        },
+                        fields: [{
+                            name: "Ping",
+                            value: "__**Usage:**!Yo!ping__\nTest the ping",
+                        },
+                        {
+                            name: "Ask Anthabot(Yes/No)",
+                            value: "__**Usage:** !Yo!Anthabot, <Any Yes/No>__\nAsk the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+                        },
+                        {
+                            name: "Hello",
+                            value: "__**Usage:** !Yo!Hello__\nSay hello to the bot!",
+                        },
+                        {
+                            name: "How are you?",
+                            value: "__**Usage:** !Yo!How are you?__\nAsk the bot how it's feeling. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
+                        },
+                        {
+                            name: "Birthday",
+                            value: "__**Usage:** !Yo!Birthday <Input your month number: 1-12>/<Input your day number: 1-31>__\nTell the bot when your birthday is and have it announced."
+                        },
+                        {
+                            name: "DJ",
+                            value: "__**Usage:** !DJ!<DJ command>__\nEnables DJ mode. Use the bot to play music in the VC you are currently in. For DJ help, use !DJ!Help with for a list of commands.",
+                        }
+                        ],
+                        timestamp: new Date(),
+                        footer: {
+                            icon_url: client.user.avatarURL,
+                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                        }
+                    }
+                });
+            }
+            if (member.roles.has(ModRole.id)) {
+                member.send({
+                    embed: {
+                        color: 3447003,
+                        author: {
+                            name: client.user.username,
+                            icon_url: client.user.avatarURL
+                        },
+                        title: "Your commands as a **__Moderator__**",
+                        description: "My prefix is __!Yo!__",
+                        fields: [
+                            {
+                                name: "Warn",
+                                value: "__**Usage:** !Yo!Warn <Mentioned Member>__\nGive a warning to a member acting up. Max cap is 3 until kicked.",
+                            },
+                            {
+                                name: "Kick",
+                                value: "__**Usage:** !Yo!Kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibily.**__",
+                            },
+                        ],
+                        timestamp: new Date(),
+                        footer: {
+                            icon_url: client.user.avatarURL,
+                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                        }
+                    }
+                });
+            }
+            if (member.roles.has(AdminRole.id)) {
+                member.send({
+                    embed: {
+                        color: 3447003,
+                        author: {
+                            name: client.user.username,
+                            icon_url: client.user.avatarURL
+                        },
+                        title: "Your commands as an **__Admin__**",
+                        description: "My prefix is __!Yo!__",
+                        fields: [
+                            {
+                                name: "Ban",
+                                value: "__**Usage:** !Yo!Ban <Mentioned Member>__\nBan this member forever. ***__Use this command with EVEN MORE responsibily.__***",
+                            }
+                        ],
+                        timestamp: new Date(),
+                        footer: {
+                            icon_url: client.user.avatarURL,
+                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                        }
+                    }
+                });
+            }
+            if (member.roles.has(AnthRole.id)) {
+                member.send({
+                    embed: {
+                        color: 3447003,
+                        author: {
+                            name: client.user.username,
+                            icon_url: client.user.avatarURL
+                        },
+                        title: "Your commands as **__Anthony__**",
+                        description: "My prefix is __!Yo!__",
+                        fields: [
+                            {
+                                name: "Update",
+                                value: "__**Usage:** !Yo!Update <List new updatesd>__\nThe bot will announce new updates and features.",
+                            }
+                        ],
+                        timestamp: new Date(),
+                        footer: {
+                            icon_url: client.user.avatarURL,
+                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                        }
+                    }
+                });
+            }
+        })
+    }
+   
     //anthony's commands
+    if (msg.content.startsWith(config.prefix + "Update")){
+        GuildID.fetchMember(msg.author.id).then(member => {
+            if (member.roles.has(AnthRole)){
+                const args = msg.content.slice(config.prefix.length).slice("Update".length).trim();
+                let announce = args[0]
+                if(announce.length = 0){
+                    console.log("Announcement not found")
+                    msg.delete()
+                    msg.author.send("No announcement was found.")
+                    return
+                }
+                else{
+                    console.log(`Update posted on ${CurrentTime}`)
+                    msg.delete();
+                    msg.channel.send("@everyone "+announce);
+                }
+            }
+            if(!member.roles.has(AnthRole)){
+                msg.delete()
+                msg.author.send("You do not have permission to use this command. Verify yourself via DM or in the #rules-and-access channel.")
+                return
+            }
+        })
+    }
     //Admin Commands
     //A.Warn
     if (msg.content.startsWith(config.prefix + "Warn")) {
