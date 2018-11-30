@@ -209,7 +209,7 @@ client.on('guildMemberRemove', member => {
         })
     }
     function bdayremoval(){
-        fs.readFile("bddb", "UTF-8", (error, data) => {
+        fs.readFile("bddb.json", "UTF-8", (error, data) => {
             if (error) {
                 console.error(error)
             }
@@ -244,9 +244,10 @@ client.on('message', msg => {
     //Below is the prevention of Botception.
     if (msg.author.bot) return
     //Check if the user has at least Member role.
-    if (msg){
-        GuildID.fetchMember(msg.author.id).then(member => {
-            if(member.roles.has(MemberRole)){
+    
+        
+
+            
                 //Link obliterator
     if (msg.content.includes("https://discord.gg/")) {
         msg.delete()
@@ -545,16 +546,13 @@ client.on('message', msg => {
             })
         })
     }
-            }
-            if(!member.roles.has(MemberRole)){
-                msg.author.send()
-                return
-            }
-        })
-    }
+            
+            
+        
+    
     if (msg.content.startsWith(config.prefix + "Me")){
         GuildID.fetchMember(msg.author.id).then(member => {
-        fs.readFile("bddb", "UTF-8", (error, data) => {
+        fs.readFile("bddb.json", "UTF-8", (error, data) => {
             if (error) {
                 console.error(error)
             }
@@ -562,81 +560,99 @@ client.on('message', msg => {
             var Birthdays = bdata.Birthdays;
             for (var key in Birthdays){
                 if(Birthdays.hasOwnProperty(key)){
-                    let birthmonth = Birthdays[key].formattedMonth;
-                    let birthDAY = Birthdays[key].day;
+                    console.log("bday key found")
+                    var birthmonth = Birthdays[key].formattedMonth;
+                    var birthDAY = Birthdays[key].day;
                     if(Birthdays.hasOwnProperty(member.id)){
-                        let reformattedmonth = Number(birthmonth) + 1;
-                        let infostr = "month/day"
-                        let BDAYstr = infostr.replace("month",reformattedmonth).replace("day",birthDAY)
+                        console.log("bday member id found")
+                        var reformattedmonth = Number(birthmonth) + 1;
+                        var infostr = "month/day"
+                        var BDAYstr = infostr.replace("month",reformattedmonth).replace("day",birthDAY)
+                        console.log(BDAYstr)
                     }
                     if(!Birthdays.hasOwnProperty(member.id)){
-                        let BDAYstr = "No Data"
+                        console.log("BDAY member id not found")
+                        var BDAYstr = "No Data"
                     }
                 }
                 if(!Birthdays.hasOwnProperty(key)){
-                    let BDAYstr = "No Data"
+                    console.log("bday key not found")
+                    var BDAYstr = "No Data"
                 }
+                
             }
-        })
-        fs.readFile("wdb.json", "UTF-8", (error, data) => {
-            if (error) {
-                console.error(error)
-            }
-            var pdata = JSON.parse(data)
-            var warned = pdata.warned;
-            for (var key in warned) {
-                if (warned.hasOwnProperty(key)) {
-                    let time = warned[key].UserEX;
-                    let count = warned[key].UserCt;
-                    if (warned.hasOwnProperty(member.id)) {
-                        let infostr = "0"
-                        var countstr = infostr.replace("0",count)
+            fs.readFile("wdb.json", "UTF-8", (error, data) => {
+                if (error) {
+                    console.error(error)
+                }
+                var pdata = JSON.parse(data)
+                var warned = pdata.warned;
+                for (var key in warned) {
+                    if (warned.hasOwnProperty(key)) {
+                        console.log("warned key found")
+                        let time = warned[key].UserEX;
+                        let count = warned[key].UserCt;
+                        if (warned.hasOwnProperty(member.id)) {
+                            let infostr = "0"
+                            var countstr = infostr.replace("0",count)
+                            console.log("warned member id found")
+                        }
+                        if (!warned.hasOwnProperty(member.id)){
+                            var countstr = 0
+                            console.log("warned id not found")
+                        }
                     }
+                    if (!warned.hasOwnProperty(key)){
+                        console.log("warned key not found")
+                        var countstr = "0"
+                    }   
                 }
-                if (!warned.hasOwnProperty(key)){
-                    let countstr = "0"
-                }
-            }
+                let embed = new Discord.RichEmbed({
+                    thumbnail: {
+                      url: msg.author.avatarURL
+                    },
+                    title: msg.author.tag,
+                    color: 4886754,
+                    author: {
+                      name: "Anthony's Server of Servitude ID CARD"
+                    },
+                    fields: [
+                      {
+                        name: "USER ID",
+                        value: "```" + member.id + "```",
+                        inline: true
+                      },
+                      {
+                        name: "JOINED ON",
+                        value: "```" + member.joinedAt.toDateString() + "```",
+                        inline: true
+                      },
+                      {
+                        name: "RANK",
+                        value: "```" + member.highestRole.name + "```"
+                      }
+                      /*,
+                      {
+                          name: "BIRTHDAY",
+                          value: "```" + BDAYstr + "```",
+                          inline: true
+                      },
+                      {
+                          name: "WARNING COUNT",
+                          value: "```" + countstr + "```",
+                          inline: true
+                      }*/
+                    ]
+                  })
+                member.send({embed})
+                  
+            })
         })
+        
+        
     
   
-            member.send({
-  embed: {
-    thumbnail: {
-      url: msg.author.avatarURL
-    },
-    title: msg.author.tag,
-    color: 4886754,
-    author: {
-      name: "Anthony's Server of Servitude ID CARD"
-    },
-    fields: [
-      {
-        name: "USER ID",
-        value: "```" + msg.member.id + "```",
-        inline: true
-      },
-      {
-        name: "JOINED ON",
-        value: "```" + msg.member.joinedTimestamp + "```",
-        inline: true
-      },
-      {
-        name: "RANK",
-        value: "```" + msg.member.highestRole + "```"
-      },
-      {
-          name: "BIRTHDAY",
-          value: "```" + BDAYstr + "```",
-          inline: true
-      },
-      {
-          name: "WARNING COUNT",
-          value: "```" + countstr
-      }
-    ]
-  }
-})
+            
         })
     }
     //help function
