@@ -702,7 +702,7 @@ client.on('message', msg => {
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 });
@@ -730,7 +730,7 @@ client.on('message', msg => {
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 });
@@ -754,7 +754,7 @@ client.on('message', msg => {
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 });
@@ -778,7 +778,7 @@ client.on('message', msg => {
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 });
@@ -1200,7 +1200,7 @@ client.on('message', msg => {
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 })
@@ -1351,7 +1351,7 @@ client.on('message', msg => {
                 timestamp: new Date(),
                 footer: {
                     icon_url: client.user.avatarURL,
-                    text: "This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                    text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                 }
             }
         })
