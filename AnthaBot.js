@@ -24,7 +24,7 @@ client.on('ready', () => {
         leaveAlt: ["quit"],
         helpCmd: "helpwith",
     })
-    console.log(`Anthabot 1.1.1 STABLE successfully connected. Awaiting Commands.`)
+    console.log(`Anthabot 1.1.15 STABLE successfully connected. Awaiting Commands.`)
     //unverifiedCheck
     var unverifiedCheck = setInterval(uvcTimer, 1000)
     function uvcTimer(){
@@ -108,30 +108,47 @@ client.on('ready', () => {
             }
             var bdata = JSON.parse(data)
             var Birthdays = bdata.Birthdays;
+            let currentMonth = new Date().getMonth();
+            let currentDay = new Date().getDate();
             for (var key in Birthdays){
                 if(Birthdays.hasOwnProperty(key)){
-                    let currentMonth = new Date().getMonth();
-                    let currentDay = new Date().getDay();
-                    let birthmonth = Birthdays[key].formattedMonth;
-                    let birthDAY = Birthdays[key].day;
-                    if((birthmonth = currentMonth) && (birthDAY = currentDay)){
+                    let birthmonth = Number(Birthdays[key].formattedMonth);
+                    let birthDAY = Number(Birthdays[key].day);
+                    if(birthmonth == currentMonth && (birthDAY == currentDay)){
                         var GuildID = client.guilds.get('404304756845051905')
                         var announceChannelID = client.channels.get('405739200176979968')
-                        GuildID.fetchMember(key).then(member => {
+                        let monthconfirm = Object.keys(Birthdays).filter(function(key){
+                            return Birthdays[key].formattedMonth === currentMonth
+                        })
+                        let dayconfirm = Object.keys(Birthdays).filter(function(key){
+                            return Birthdays[key].day === currentDay
+                        })
+                        
+                        var bdayarrays = [monthconfirm,dayconfirm]
+            
+                        var match = bdayarrays.shift().filter(function(v){
+                            return bdayarrays.every(function(a) {
+                                return a.indexOf(v) !== -1;
+                            })
+                        })
+                        var bdayuser = match.toString();
+                        GuildID.fetchMember(bdayuser).then(member => {
                             member.send(`Happy Birthday, ${member.displayName}!-From Anthony, Anthabot, and the members of Anthony's Server of Servitude, we hope you have a good one!`, {
                                 file: "https://media.giphy.com/media/37bUqIiNCTt28/giphy.gif"
                             })
-                            //announceChannelID.send(`@everyone Today is ${member.displayName}'s birthday! Please wish them a happy birthday!`)
                             announceChannelID.send(`@everyone Today is ${member.displayName}'s birthday! Please wish them a happy birthday!`, {
                                 file: "https://media.giphy.com/media/37bUqIiNCTt28/giphy.gif"
                             })
                             
                         })
                     }
-                }
-                if(!Birthdays.hasOwnProperty(key)){
-                    return
-                }
+                    if(!birthmonth == currentMonth && birthDAY == currentDay){
+                        return
+                    }
+                } 
+            }
+            if(!Birthdays.hasOwnProperty(key)){
+                return
             }
         })
   } 
@@ -248,7 +265,7 @@ client.on('message', msg => {
         
 
             
-                //Link obliterator
+    //Link obliterator
     if (msg.content.includes("https://discord.gg/")) {
         msg.delete()
         msg.member.send('You are reminded that outside Discord server links are not permitted in the server.')
@@ -308,7 +325,6 @@ client.on('message', msg => {
     }
     //birthday function
     if(msg.content.startsWith(config.prefix + 'BDAY')){
-        
         const args = msg.content.slice(config.prefix.length).slice("BDAY".length).trim().split("/");
         var name = msg.author.tag
         var id = msg.author.id
@@ -547,112 +563,94 @@ client.on('message', msg => {
         })
     }
             
-            
-        
-    
-    if (msg.content.startsWith(config.prefix + "Me")){
-        GuildID.fetchMember(msg.author.id).then(member => {
-        fs.readFile("bddb.json", "UTF-8", (error, data) => {
-            if (error) {
-                console.error(error)
-            }
-            var bdata = JSON.parse(data)
-            var Birthdays = bdata.Birthdays;
-            for (var key in Birthdays){
-                if(Birthdays.hasOwnProperty(key)){
-                    console.log("bday key found")
-                    var birthmonth = Birthdays[key].formattedMonth;
-                    var birthDAY = Birthdays[key].day;
-                    if(Birthdays.hasOwnProperty(member.id)){
-                        console.log("bday member id found")
-                        var reformattedmonth = Number(birthmonth) + 1;
-                        var infostr = "month/day"
-                        var BDAYstr = infostr.replace("month",reformattedmonth).replace("day",birthDAY)
-                        console.log(BDAYstr)
-                    }
-                    if(!Birthdays.hasOwnProperty(member.id)){
-                        console.log("BDAY member id not found")
-                        var BDAYstr = "No Data"
+    if (msg.content.startsWith(config.prefix + "ID")){
+            fs.readFile("bddb.json", "UTF-8", (error, data) => {
+                if(error){
+                    console.log(error)
+                }
+                var bdata = JSON.parse(data)
+                var Birthdays = bdata.Birthdays;
+                for (var key in Birthdays){
+                    if(Birthdays.hasOwnProperty(key)){
+                        if(Birthdays.hasOwnProperty(msg.author.id)){
+                            var birthmonth = Birthdays[msg.author.id].formattedMonth;
+                            var birthDAY = Birthdays[msg.author.id].day;
+                            var reformattedmonth = Number(birthmonth) + 1;
+                            var infostr = "month/day"
+                            var BDAYstr = infostr.replace("month",reformattedmonth).replace("day",birthDAY)
+                        }
+                        if(!Birthdays.hasOwnProperty(msg.author.id)){
+                            BDAYstr = "No Data"
+                        }
                     }
                 }
                 if(!Birthdays.hasOwnProperty(key)){
-                    console.log("bday key not found")
-                    var BDAYstr = "No Data"
+                    let BDAYstr = "No Data"
                 }
-                
-            }
-            fs.readFile("wdb.json", "UTF-8", (error, data) => {
-                if (error) {
-                    console.error(error)
-                }
-                var pdata = JSON.parse(data)
-                var warned = pdata.warned;
-                for (var key in warned) {
-                    if (warned.hasOwnProperty(key)) {
-                        console.log("warned key found")
-                        let time = warned[key].UserEX;
-                        let count = warned[key].UserCt;
-                        if (warned.hasOwnProperty(member.id)) {
-                            let infostr = "0"
+                console.log(BDAYstr)
+                fs.readFile("wdb.json", "UTF-8", (error, data) => {
+                    if(error){
+                        console.error(error)
+                    }
+                    var pdata = JSON.parse(data)
+                    var warned = pdata.warned;
+                    for (var key in warned){
+                        if(warned.hasOwnProperty(key)){
+                            if(warned.hasOwnProperty(msg.author.id)){
+                                var count = warned[msg.author.id].UserCt;
+                                let infostr = "0"
                             var countstr = infostr.replace("0",count)
-                            console.log("warned member id found")
-                        }
-                        if (!warned.hasOwnProperty(member.id)){
-                            var countstr = 0
-                            console.log("warned id not found")
+                            }
+                            if(!warned.hasOwnProperty(msg.author.id)){
+                                var countstr = 0
+                            }
                         }
                     }
-                    if (!warned.hasOwnProperty(key)){
-                        console.log("warned key not found")
-                        var countstr = "0"
-                    }   
-                }
-                let embed = new Discord.RichEmbed({
-                    thumbnail: {
-                      url: msg.author.avatarURL
-                    },
-                    title: msg.author.tag,
-                    color: 4886754,
-                    author: {
-                      name: "Anthony's Server of Servitude ID CARD"
-                    },
-                    fields: [
-                      {
-                        name: "USER ID",
-                        value: "```" + member.id + "```",
-                        inline: true
-                      },
-                      {
-                        name: "JOINED ON",
-                        value: "```" + member.joinedAt.toDateString() + "```",
-                        inline: true
-                      },
-                      {
-                        name: "RANK",
-                        value: "```" + member.highestRole.name + "```"
-                      }
-                      /*,
-                      {
-                          name: "BIRTHDAY",
-                          value: "```" + BDAYstr + "```",
-                          inline: true
-                      },
-                      {
-                          name: "WARNING COUNT",
-                          value: "```" + countstr + "```",
-                          inline: true
-                      }*/
-                    ]
-                  })
-                member.send({embed})
-                  
-            })
-        })
-        
-        
-    
-  
-            
+                    if(!warned.hasOwnProperty(key)){
+                        var countstr = 0
+                    }
+                    console.log(countstr)
+                    GuildID.fetchMember(msg.author.id).then(member => {
+                        const embed = new Discord.RichEmbed({
+                            thumbnail: {
+                              url: msg.author.avatarURL
+                            },
+                            title: msg.author.tag,
+                            color: 4886754,
+                            author: {
+                              name: "Anthony's Server of Servitude ID CARD"
+                            },
+                            fields: [
+                              {
+                                name: "USER ID",
+                                value: "```" + member.id + "```",
+                                inline: true
+                              },
+                              {
+                                name: "JOINED ON",
+                                value: "```" + member.joinedAt.toDateString() + "```",
+                                inline: true
+                              },
+                              {
+                                name: "RANK",
+                                value: "```" + member.highestRole.name + "```"
+                              }
+                              ,
+                              {
+                                  name: "BIRTHDAY",
+                                  value: "```" + BDAYstr + "```",
+                                  inline: true
+                              },
+                              {
+                                  name: "WARNING COUNT",
+                                  value: "```" + countstr + "```",
+                                  inline: true
+                              }
+                            ]
+                          })
+                          member.send(embed)
+                    })
+                })
         })
     }
     //help function
@@ -675,6 +673,10 @@ client.on('message', msg => {
                         fields: [{
                             name: "Ping",
                             value: "__**Usage:**!Yo!ping__\nTest the ping",
+                        },
+                        {
+                            name: "ID",
+                            value: "__**Usage:** !Yo!ID__\nView your personal ID card."
                         },
                         {
                             name: "Ask Anthabot(Yes/No)",
@@ -961,7 +963,8 @@ client.on('message', msg => {
         }
         if (mentioned.id === '262477177449086976') {
             msg.delete()
-            return msg.author.send('You cannot warn the owner.')
+            msg.author.send('You cannot warn the owner.')
+            return 
         }
         
         if ((msg.member.roles.has(ModRole.id))&&(!msg.member.roles.has(AdminRole.id))){
@@ -1074,10 +1077,96 @@ client.on('message', msg => {
                         var ddp = "/unverified/ID"
                         var nddp = ddp.replace('ID', member.id)
                         db.delete(nddp)
-                })
-                
-            
+                })            
                 msg.author.send(`Congratulations! You are now a member of the server! Enjoy your stay!`)
+                fs.readFile("bddb.json", "UTF-8", (error, data) => {
+                    if(error){
+                        console.log(error)
+                    }
+                    var bdata = JSON.parse(data)
+                    var Birthdays = bdata.Birthdays;
+                    for (var key in Birthdays){
+                        if(Birthdays.hasOwnProperty(key)){
+                            if(Birthdays.hasOwnProperty(msg.author.id)){
+                                var birthmonth = Birthdays[msg.author.id].formattedMonth;
+                                var birthDAY = Birthdays[msg.author.id].day;
+                                var reformattedmonth = Number(birthmonth) + 1;
+                                var infostr = "month/day"
+                                var BDAYstr = infostr.replace("month",reformattedmonth).replace("day",birthDAY)
+                            }
+                            if(!Birthdays.hasOwnProperty(msg.author.id)){
+                                BDAYstr = "No Data"
+                            }
+                        }
+                    }
+                    if(!Birthdays.hasOwnProperty(key)){
+                        let BDAYstr = "No Data"
+                    }
+                    console.log(BDAYstr)
+                    fs.readFile("wdb.json", "UTF-8", (error, data) => {
+                        if(error){
+                            console.error(error)
+                        }
+                        var pdata = JSON.parse(data)
+                        var warned = pdata.warned;
+                        for (var key in warned){
+                            if(warned.hasOwnProperty(key)){
+                                if(warned.hasOwnProperty(msg.author.id)){
+                                    var count = warned[msg.author.id].UserCt;
+                                    let infostr = "0"
+                                var countstr = infostr.replace("0",count)
+                                }
+                                if(!warned.hasOwnProperty(msg.author.id)){
+                                    var countstr = 0
+                                }
+                            }
+                        }
+                        if(!warned.hasOwnProperty(key)){
+                            var countstr = 0
+                        }
+                        console.log(countstr)
+                        GuildID.fetchMember(msg.author.id).then(member => {
+                            const embed = new Discord.RichEmbed({
+                                thumbnail: {
+                                  url: msg.author.avatarURL
+                                },
+                                title: msg.author.tag,
+                                color: 4886754,
+                                author: {
+                                  name: "Anthony's Server of Servitude ID CARD"
+                                },
+                                fields: [
+                                  {
+                                    name: "USER ID",
+                                    value: "```" + member.id + "```",
+                                    inline: true
+                                  },
+                                  {
+                                    name: "JOINED ON",
+                                    value: "```" + member.joinedAt.toDateString() + "```",
+                                    inline: true
+                                  },
+                                  {
+                                    name: "RANK",
+                                    value: "```" + member.highestRole.name + "```"
+                                  }
+                                  ,
+                                  {
+                                      name: "BIRTHDAY",
+                                      value: "```" + BDAYstr + "```",
+                                      inline: true
+                                  },
+                                  {
+                                      name: "WARNING COUNT",
+                                      value: "```" + countstr + "```",
+                                      inline: true
+                                  }
+                                ]
+                              })
+                              member.send(embed)
+                        })
+                    })
+            })
                 msg.author.send({
                     embed: {
                         title: "Your commands as a **__Member__**",
@@ -1140,7 +1229,95 @@ client.on('message', msg => {
             db.delete(nddp)
     })
         msg.delete()
-        msg.member.send(`Congratulations! You are now a member of the server! Enjoy your stay!`)
+        msg.member.send(`Congratulations! You are now a member of the server and here is your very own ID card! This let's you know where you stand as far as general info for your membership. Please enjoy your stay.\n If you need help, try !Yo!Help!`)
+        fs.readFile("bddb.json", "UTF-8", (error, data) => {
+            if(error){
+                console.log(error)
+            }
+            var bdata = JSON.parse(data)
+            var Birthdays = bdata.Birthdays;
+            for (var key in Birthdays){
+                if(Birthdays.hasOwnProperty(key)){
+                    if(Birthdays.hasOwnProperty(msg.author.id)){
+                        var birthmonth = Birthdays[msg.author.id].formattedMonth;
+                        var birthDAY = Birthdays[msg.author.id].day;
+                        var reformattedmonth = Number(birthmonth) + 1;
+                        var infostr = "month/day"
+                        var BDAYstr = infostr.replace("month",reformattedmonth).replace("day",birthDAY)
+                    }
+                    if(!Birthdays.hasOwnProperty(msg.author.id)){
+                        BDAYstr = "No Data"
+                    }
+                }
+            }
+            if(!Birthdays.hasOwnProperty(key)){
+                let BDAYstr = "No Data"
+            }
+            console.log(BDAYstr)
+            fs.readFile("wdb.json", "UTF-8", (error, data) => {
+                if(error){
+                    console.error(error)
+                }
+                var pdata = JSON.parse(data)
+                var warned = pdata.warned;
+                for (var key in warned){
+                    if(warned.hasOwnProperty(key)){
+                        if(warned.hasOwnProperty(msg.author.id)){
+                            var count = warned[msg.author.id].UserCt;
+                            let infostr = "0"
+                        var countstr = infostr.replace("0",count)
+                        }
+                        if(!warned.hasOwnProperty(msg.author.id)){
+                            var countstr = 0
+                        }
+                    }
+                }
+                if(!warned.hasOwnProperty(key)){
+                    var countstr = 0
+                }
+                console.log(countstr)
+                GuildID.fetchMember(msg.author.id).then(member => {
+                    const embed = new Discord.RichEmbed({
+                        thumbnail: {
+                          url: msg.author.avatarURL
+                        },
+                        title: msg.author.tag,
+                        color: 4886754,
+                        author: {
+                          name: "Anthony's Server of Servitude ID CARD"
+                        },
+                        fields: [
+                          {
+                            name: "USER ID",
+                            value: "```" + member.id + "```",
+                            inline: true
+                          },
+                          {
+                            name: "JOINED ON",
+                            value: "```" + member.joinedAt.toDateString() + "```",
+                            inline: true
+                          },
+                          {
+                            name: "RANK",
+                            value: "```" + member.highestRole.name + "```"
+                          }
+                          ,
+                          {
+                              name: "BIRTHDAY",
+                              value: "```" + BDAYstr + "```",
+                              inline: true
+                          },
+                          {
+                              name: "WARNING COUNT",
+                              value: "```" + countstr + "```",
+                              inline: true
+                          }
+                        ]
+                      })
+                      member.send(embed)
+                })
+            })
+    })
         msg.author.send({
             embed: {
                 title: "Your commands as a **__Member__**",
