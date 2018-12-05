@@ -326,7 +326,7 @@ if(random == 2){
     var tpl = twoarg.choose[Math.floor(Math.random() * 10)]
 }
 if(random == 1){
-    var tpl = choose.choose[Math.floor(Math.random() * 5)]
+    var tpl = onearg.choose[Math.floor(Math.random() * 5)]
 }
 var res = eval('`'+tpl+'`')
 msg.reply(res);

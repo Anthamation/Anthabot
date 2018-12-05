@@ -9,7 +9,7 @@
         "${elem1} is a terrible idea. *Do it anyways.*",
         "${elem1} makes me nervous. Try ${elem2} instead.",
         "${elem2}. Seems legit.",
-        "Jeez, are you serious? {elem1} is obviously the best.",
+        "Jeez, are you serious? ${elem1} is obviously the best.",
         "When ${elem1} and ${elem3} love each other so much, they made ${elem2}, which is clearly the best choice.",
         "It seems that ${elem2} is in the lead, until ${elem3} passes by! But wait! It seems that ${elem1} has crossed the finish line, and is the best choice!!",
         "Well, ${elem2} has some pretty bad cons and ${elem1}....yeahhh, that's just...sad... ${elem3} seems to be less of a disappointment.",
