@@ -1,0 +1,13 @@
+{
+    "choose": [
+        "I was gonna choose ${elem1}, but then, I decided ${elem2} was better",
+        "I like ${elem1}, I like it a lot.",
+        "Obviously, anyone would pick ${elem1}",
+        "COMPUTING...${elem1} IS SUPERIOR THAN ${elem2}",
+        "Why would anyone pick ${elem1}?? ${elem2} is far much better.",
+        "${elem2} seems about right. Until I checked out ${elem1} and completely blew ${elem2} out of the water.",
+        "${elem1} is a terrible idea. *Do it anyways.*",
+        "${elem1} makes me nervous. Try ${elem2} instead.",
+        "${elem2}. Seems legit.",
+        "Jeez, are you serious? {elem1} is obviously the best."
+    ]}

@@ -1,0 +1,8 @@
+{
+    "choose": [
+        "I obviously have no choice than to choose ${elem1}.",
+        "Do I have a choice other than ${elem1}?",
+        "Pretty bold of you to assume I can choose something other than ${elem1}.",
+        "I don't understand. Why did you only give me ${elem1} to choose from?",
+        "${elem1} is the only thing you gave me so I guess ${elem1}??"
+    ]}

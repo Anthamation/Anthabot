@@ -11,6 +11,9 @@ const ytm = require('discord.js-musicbot-addon');
 const config = require("./config.json");
 const YN_list = require("./YN_List.json");
 const hruf_List = require("./HRUF.json");
+const onearg = require('./choose/1.json')
+const twoarg = require('./choose/2.json')
+const threearg = require('./choose/3.json')
 const fs = require('fs');
 
 
@@ -191,7 +194,7 @@ client.on('guildMemberRemove', member => {
                     let MemberRole = GuildID.roles.get('404333218922233858')
                     if (member.id = id) {
                         var ddp = "/unverified/ID"
-                        var nddp = ddp.replace('ID', key)
+                        var nddp = ddp.replace('ID', member.id)
                         db.delete(nddp)
                         console.log(`${member.id} has been removed from the Unverified Database`)
                     }
@@ -283,6 +286,53 @@ client.on('message', msg => {
             console.log(`${member.displayName} has used the PING command on ${CurrentTime}`)
         })
     }
+    //choose function
+    if (msg.content.startsWith(config.prefix + "Choose")){
+        const args = msg.content.slice(config.prefix.length).slice("Choose".length).trim().replace("?","").split(/(?:,| |or)+/)
+        if(args === []){
+            msg.reply("There was nothing to choose from!")
+            return
+        }
+        else{
+            var elem1;
+            var elem2;
+            var elem3;
+            var random = args.length
+            elem1 = args[Math.floor(Math.random() * random)];
+if (random > 1) {
+    do{
+elem2 = args[Math.floor(Math.random() * random)]
+    }
+    while(elem1 == elem2);
+}
+if (random >= 3) {
+    do{
+        elem2 = args[Math.floor(Math.random() * random)]
+    }
+    while(elem1 == elem2);
+    do{
+        elem3 = args[Math.floor(Math.random() * random)]
+    }
+    while(elem2 == elem3)
+    do{
+        elem3 = args[Math.floor(Math.random() * random)]
+    }
+    while(elem1 == elem3)
+}
+if(random >= 3){
+    var tpl = threearg.choose[Math.floor(Math.random() * 16)]
+}
+if(random == 2){
+    var tpl = twoarg.choose[Math.floor(Math.random() * 10)]
+}
+if(random == 1){
+    var tpl = choose.choose[Math.floor(Math.random() * 5)]
+}
+var res = eval('`'+tpl+'`')
+msg.reply(res);
+console.log(`${msg.author} used the CHOOSE Function`)
+        }
+    }
     //Yes/No Function
     if (msg.content.startsWith(config.prefix + "Anthabot,")) {
         var GuildID = client.guilds.get('404304756845051905')
@@ -292,7 +342,7 @@ client.on('message', msg => {
         })
     }
     //is your mom gay?
-    if (msg.content.startsWith(config.prefix + " is your mom gay?")) {
+    if (msg.content.startsWith(config.prefix + "is your mom gay?")) {
         var GuildID = client.guilds.get('404304756845051905')
         GuildID.fetchMember(msg.author.id).then(member => {
             msg.reply("no u")
@@ -587,7 +637,6 @@ client.on('message', msg => {
                 if(!Birthdays.hasOwnProperty(key)){
                     let BDAYstr = "No Data"
                 }
-                console.log(BDAYstr)
                 fs.readFile("wdb.json", "UTF-8", (error, data) => {
                     if(error){
                         console.error(error)
@@ -609,7 +658,6 @@ client.on('message', msg => {
                     if(!warned.hasOwnProperty(key)){
                         var countstr = 0
                     }
-                    console.log(countstr)
                     GuildID.fetchMember(msg.author.id).then(member => {
                         const embed = new Discord.RichEmbed({
                             thumbnail: {
@@ -649,6 +697,7 @@ client.on('message', msg => {
                             ]
                           })
                           member.send(embed)
+                          console.log(`${member.displayName} used the ID Function`)
                     })
                 })
         })
@@ -661,6 +710,7 @@ client.on('message', msg => {
                 member.send("You have not been verified yet, so there are no commands available for you.")
             }
             if (member.roles.has(MemberRole.id)) {
+                console.log(`${member.displayName} has used the HELP function`)
                 member.send({
                     embed: {
                         title: "Your commands as a **__Member__**",
