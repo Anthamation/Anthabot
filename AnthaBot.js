@@ -729,6 +729,10 @@ console.log(`${msg.author} used the CHOOSE Function`)
                             value: "__**Usage:** !Yo!ID__\nView your personal ID card."
                         },
                         {
+                            name:"Choose",
+                            value: "__**Usage:** !Yo!Choose <Example1>, <Example2>, or <Example3>?__\nUse the bot to decide from a pool of options you provide. The options are seperated from spaces, commas and \"or\". This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel"
+                        },
+                        {
                             name: "Ask Anthabot(Yes/No)",
                             value: "__**Usage:** !Yo!Anthabot, <Any Yes/No>__\nAsk the bot a question. This command replies from a random phrase from a database. Have a suggestion for a phrase? Suggest in the #suggestions channel",
                         },
