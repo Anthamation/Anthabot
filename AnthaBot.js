@@ -4,9 +4,9 @@ const JsonDB = require('node-json-db');
 const db = new JsonDB("edb", true, true);
 const edb = require("./edb.json");
 const jwdb = new JsonDB("wdb", true, true);
-const bddb = require("./bddb.json")
-const jbddb = new JsonDB("bddb", true, true);
 const wdb = require("./wdb.json");
+const jbddb = new JsonDB("bddb", true, true);
+const bddb = require("./bddb.json")
 const ytm = require('discord.js-musicbot-addon');
 const config = require("./config.json");
 const YN_list = require("./YN_List.json");
@@ -20,6 +20,13 @@ const fs = require('fs');
 client.login(config.token)
 
 client.on('ready', () => {
+    if(!client.voiceConnections() === null){
+        let vc = client.voiceConnections.find(val => val.channel.guild.id == msg.guild.id);
+        vc.disconnect();
+    }
+    if(client.voiceConnections() === null){
+        return
+    }
     ytm.start(client, {
         youtubeKey: config.api,
         prefix: "!DJ!",
@@ -27,7 +34,7 @@ client.on('ready', () => {
         leaveAlt: ["quit"],
         helpCmd: "helpwith",
     })
-    console.log(`Anthabot 1.1.15 STABLE successfully connected. Awaiting Commands.`)
+    console.log(`Anthabot 1.1.2 STABLE successfully connected. Awaiting Commands.`)
     //unverifiedCheck
     var unverifiedCheck = setInterval(uvcTimer, 1000)
     function uvcTimer(){
@@ -264,10 +271,7 @@ client.on('message', msg => {
     //Below is the prevention of Botception.
     if (msg.author.bot) return
     //Check if the user has at least Member role.
-    
-        
 
-            
     //Link obliterator
     if (msg.content.includes("https://discord.gg/")) {
         msg.delete()
@@ -722,7 +726,7 @@ console.log(`${msg.author} used the CHOOSE Function`)
                         },
                         fields: [{
                             name: "Ping",
-                            value: "__**Usage:**!Yo!ping__\nTest the ping",
+                            value: "__**Usage:** !Yo!ping__\nTest the ping",
                         },
                         {
                             name: "ID",
@@ -756,7 +760,7 @@ console.log(`${msg.author} used the CHOOSE Function`)
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.2```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 });
@@ -778,13 +782,13 @@ console.log(`${msg.author} used the CHOOSE Function`)
                             },
                             {
                                 name: "Kick",
-                                value: "__**Usage:** !Yo!Kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibily.**__",
-                            },
+                                value: "__**Usage:** !Yo!Kick <Mentioned Member>__\nGive that member the boot. __**Use this command with responsibility.**__",
+                            }
                         ],
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.2```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 });
@@ -808,7 +812,7 @@ console.log(`${msg.author} used the CHOOSE Function`)
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.2```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 });
@@ -826,13 +830,13 @@ console.log(`${msg.author} used the CHOOSE Function`)
                         fields: [
                             {
                                 name: "Update",
-                                value: "__**Usage:** !Yo!Update <List new updatesd>__\nThe bot will announce new updates and features.",
+                                value: "__**Usage:** !Yo!Update <List new updates>__\nThe bot will announce new updates and features.",
                             }
                         ],
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.2```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 });
@@ -843,7 +847,7 @@ console.log(`${msg.author} used the CHOOSE Function`)
     //anthony's commands
     if (msg.content.startsWith(config.prefix + "Update")){
         GuildID.fetchMember(msg.author.id).then(member => {
-            if (member.roles.has(AnthRole)){
+            if (member.roles.has(AnthRole.id)){
                 const args = msg.content.slice(config.prefix.length).slice("Update".length).trim();
                 let announce = args[0]
                 if(announce.length = 0){
@@ -858,9 +862,9 @@ console.log(`${msg.author} used the CHOOSE Function`)
                     msg.channel.send("@everyone "+announce);
                 }
             }
-            if(!member.roles.has(AnthRole)){
+            if(!member.roles.has(AnthRole.id)){
                 msg.delete()
-                msg.author.send("You do not have permission to use this command. Verify yourself via DM or in the #rules-and-access channel.")
+                msg.author.send("You do not have permission to use this command.")
                 return
             }
         })
@@ -1116,7 +1120,7 @@ console.log(`${msg.author} used the CHOOSE Function`)
             console.error(err)
             return msg.author.send('Failed to kick user.')
         })
-    }
+        
     //Gatekeeper
 
     if (msg.content.toLowerCase() == 'agree' && msg.channel.type === 'dm') {
@@ -1254,7 +1258,7 @@ console.log(`${msg.author} used the CHOOSE Function`)
                         timestamp: new Date(),
                         footer: {
                             icon_url: client.user.avatarURL,
-                            text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                            text: "```Current Version: 1.1.2```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                         }
                     }
                 })
@@ -1405,7 +1409,7 @@ console.log(`${msg.author} used the CHOOSE Function`)
                 timestamp: new Date(),
                 footer: {
                     icon_url: client.user.avatarURL,
-                    text: "```Current Version: 1.1.15```This bot was proudly made by Anthony Rees and FlyingSixtySix"
+                    text: "```Current Version: 1.1.2```This bot was proudly made by Anthony Rees and FlyingSixtySix"
                 }
             }
         })
