@@ -20,11 +20,11 @@ const fs = require('fs');
 client.login(config.token)
 
 client.on('ready', () => {
-    if(!client.voiceConnections() === null){
+    if(!client.voiceConnections._array() === null){
         let vc = client.voiceConnections.find(val => val.channel.guild.id == msg.guild.id);
         vc.disconnect();
     }
-    if(client.voiceConnections() === null){
+    if(client.voiceConnections._array() === null){
         return
     }
     ytm.start(client, {
