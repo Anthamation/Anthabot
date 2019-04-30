@@ -849,7 +849,7 @@ console.log(`${msg.author} used the CHOOSE Function`)
         GuildID.fetchMember(msg.author.id).then(member => {
             if (member.roles.has(AnthRole.id)){
                 const args = msg.content.slice(config.prefix.length).slice("Update".length).trim();
-                let announce = args[0]
+                let announce = args[]
                 if(announce.length = 0){
                     console.log("Announcement not found")
                     msg.delete()
