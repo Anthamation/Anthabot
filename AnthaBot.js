@@ -1414,4 +1414,4 @@ console.log(`${msg.author} used the CHOOSE Function`)
             }
         })
     }
-})
+}})
