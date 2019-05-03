@@ -20,11 +20,11 @@ const fs = require('fs');
 client.login(config.token)
 
 client.on('ready', () => {
-    if(!client.voiceConnections.equals() === 0){
+    if(client.voiceConnections.exists === true){
         let vc = client.voiceConnections.find(val => val.channel.guild.id == msg.guild.id);
         vc.disconnect();
     }
-    if(client.voiceConnections.equals() === 0){
+    if(client.voiceConnections.exists === false){
         return
     }
     ytm.start(client, {
@@ -258,7 +258,7 @@ client.on('guildMemberRemove', member => {
   }
 });
 
-
+//commands
 
 client.on('message', msg => {
     const CurrentTime = new Date();
@@ -334,7 +334,7 @@ if(random == 1){
 }
 var res = eval('`'+tpl+'`')
 msg.reply(res);
-console.log(`${msg.author} used the CHOOSE Function`)
+console.log(`${msg.author.username} used the CHOOSE Function`)
         }
     }
     //Yes/No Function
@@ -777,6 +777,10 @@ console.log(`${msg.author} used the CHOOSE Function`)
                         description: "My prefix is __!Yo!__",
                         fields: [
                             {
+                                name: "Announce",
+                                value: "__**Usage:** !Yo!Announce <List new updates>__\nThe bot will announce your message.\n__**WARNING:**__This command uses soft notify (@here). Please use with responsibility.",
+                            },
+                            {
                                 name: "Warn",
                                 value: "__**Usage:** !Yo!Warn <Mentioned Member>__\nGive a warning to a member acting up. Max cap is 3 until kicked.",
                             },
@@ -805,6 +809,10 @@ console.log(`${msg.author} used the CHOOSE Function`)
                         description: "My prefix is __!Yo!__",
                         fields: [
                             {
+                                name: "Announce",
+                                value: "__**Usage:** !Yo!Announce <List new updates>__\nThe bot will announce your message.\n__**WARNING:**__ This command uses soft notify (@here). Please use with responsibility.",
+                            },
+                            {
                                 name: "Ban",
                                 value: "__**Usage:** !Yo!Ban <Mentioned Member>__\nBan this member forever. ***__Use this command with EVEN MORE responsibily.__***",
                             }
@@ -830,7 +838,11 @@ console.log(`${msg.author} used the CHOOSE Function`)
                         fields: [
                             {
                                 name: "Update",
-                                value: "__**Usage:** !Yo!Update <List new updates>__\nThe bot will announce new updates and features.",
+                                value: "__**Usage:** !Yo!Update <List new updates>__\nThe bot will announce new updates and features.\n__**WARNING:**__This command uses high priority notify (@everyone). Please use with resposibility.",
+                            },
+                            {
+                                name: "Announce",
+                                value: "__**Usage:** !Yo!Announce <List new updates>__\nThe bot will announce your message.\n__**WARNING:**__ This command uses soft notify (@here). Please use with responsibility.",
                             }
                         ],
                         timestamp: new Date(),
@@ -849,17 +861,18 @@ console.log(`${msg.author} used the CHOOSE Function`)
         GuildID.fetchMember(msg.author.id).then(member => {
             if (member.roles.has(AnthRole.id)){
                 const args = msg.content.slice(config.prefix.length).slice("Update".length).trim();
-                let announce = args[]
-                if(announce.length = 0){
-                    console.log("Announcement not found")
+                let announce = args
+                if(announce.length == 0){
+                    console.log("No Update found")
                     msg.delete()
-                    msg.author.send("No announcement was found.")
+                    msg.author.send("No Update was found.")
                     return
                 }
                 else{
-                    console.log(`Update posted on ${CurrentTime}`)
+                    var announceChannelID = '405739200176979968';
                     msg.delete();
-                    msg.channel.send("@everyone "+announce);
+                    console.log(`Update posted on ${CurrentTime}`)
+                    client.channels.get(announceChannelID).send("@everyone "+announce)
                 }
             }
             if(!member.roles.has(AnthRole.id)){
@@ -870,6 +883,32 @@ console.log(`${msg.author} used the CHOOSE Function`)
         })
     }
     //Admin Commands
+    //A.Announce
+    if (msg.content.startsWith(config.prefix + "Announce")){
+        GuildID.fetchMember(msg.author.id).then(member => {
+            if (member.roles.has(AdminRole.id)){
+                const args = msg.content.slice(config.prefix.length).slice("Update".length).trim();
+                let announce = args
+                if(announce.length == 0){
+                    console.log("No Update found")
+                    msg.delete()
+                    msg.author.send("No Update was found.")
+                    return
+                }
+                else{
+                    var announceChannelID = '405739200176979968';
+                    msg.delete();
+                    console.log(`Update posted on ${CurrentTime}`)
+                    client.channels.get(announceChannelID).send("@here "+announce)
+                }
+            }
+            if(!member.roles.has(AdminRole.id)){
+                msg.delete()
+                msg.author.send("You do not have permission to use this command.")
+                return
+            }
+        })
+    }
     //A.Warn
     if (msg.content.startsWith(config.prefix + "Warn")) {
         var mentioned = msg.mentions.members.first();
@@ -1006,6 +1045,35 @@ console.log(`${msg.author} used the CHOOSE Function`)
         })
     }
     //Moderator commands
+    //M.announce
+    if (msg.content.startsWith(config.prefix + "Announce")){
+        GuildID.fetchMember(msg.author.id).then(member => {
+            if (member.roles.has(ModRole.id)){
+                const args = msg.content.slice(config.prefix.length).slice("Update".length).trim();
+                let announce = args
+                if(announce.length == 0){
+                    console.log("No Update found")
+                    msg.delete()
+                    msg.author.send("No Update was found.")
+                    return
+                }
+                else{
+                    var announceChannelID = '405739200176979968';
+                    msg.delete();
+                    console.log(`Update posted on ${CurrentTime}`)
+                    client.channels.get(announceChannelID).send("@here "+announce)
+                }
+            }
+            if(!member.roles.has(ModRole.id)){
+                msg.delete()
+                msg.author.send("You do not have permission to use this command.")
+                return
+            }
+            if(member.roles.has(AdminRole.id && ModRole.id)){
+                return
+            }
+        })
+    }
     //M.Warn
     if (msg.content.startsWith(config.prefix + "Warn")) {
         var mentioned = msg.mentions.members.first();
